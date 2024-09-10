@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Game Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        /* Контейнер для картинки */
+        .game-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px; /* Ограничение по ширине */
+            margin: 0 auto;
+        }
+
+        /* Стили для картинки */
+        .game-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Общие стили для кнопок */
+        .game-button {
+            position: absolute;
+            background-color: rgba(0, 123, 255, 0.8);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        /* Позиция кнопки "Начать майнинг" */
+        #mine {
+            top: 60%;
+            left: 15%;
+        }
+
+        /* Позиция кнопки "Задания" */
+        #tasks {
+            top: 60%;
+            left: 55%;
+        }
+
+        /* Позиция кнопки "Пригласить друзей" */
+        #invite {
+            top: 70%;
+            left: 35%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <!-- Картинка игрового интерфейса -->
+        <img src="your-image-path.jpg" alt="Game Interface">
+        
+        <!-- Кнопки поверх картинки -->
+        <button id="mine" class="game-button">Начать майнинг</button>
+        <button id="tasks" class="game-button">Задания</button>
+        <button id="invite" class="game-button">Пригласить друзей</button>
+    </div>
+
+    <!-- Логика для кнопок -->
+    <script>
+        document.getElementById('mine').addEventListener('click', function() {
+            alert('Майнинг запущен!');
+        });
+
+        document.getElementById('tasks').addEventListener('click', function() {
+            alert('Показать задания!');
+        });
+
+        document.getElementById('invite').addEventListener('click', function() {
+            alert('Пригласить друзей!');
+        });
+    </script>
+
+</body>
+</html>
