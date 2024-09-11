@@ -9,82 +9,142 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-color: #87CEEB;
+            background: url('/mnt/data/DALL·E 2024-09-11 22.45.57 - A colorful retro-style platform game scene featuring a unique character, wearing a red and blue outfit, standing near a floating brick block. The char.webp') no-repeat center center;
+            background-size: cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
 
-        .game-container {
-            position: relative;
-            width: 300px;
-            height: 500px;
-            background-color: #6B8E23;
-            border: 2px solid #333;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .character {
+        .wallet {
             position: absolute;
-            bottom: 10px;
-            left: 130px;
-            width: 50px;
-            height: 50px;
-            background: url('/mnt/data/DALL·E 2024-09-11 22.45.57 - A colorful retro-style platform game scene featuring a unique character, wearing a red and blue outfit, standing near a floating brick block. The char.webp') no-repeat center;
-            background-size: contain;
-            transition: bottom 0.3s;
+            top: 20px;
+            right: 20px;
         }
 
-        .brick {
+        .wallet img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .balance {
             position: absolute;
-            top: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 30px;
-            background-color: #8B4513;
-            border: 2px solid #333;
+            top: 20px;
+            left: 20px;
+            font-size: 24px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
             border-radius: 5px;
         }
 
-        .coin {
-            position: absolute;
-            top: 70px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 30px;
-            background: url('https://example.com/coin.png') no-repeat center;
-            background-size: contain;
+        .mine-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .mine-btn {
+            background-color: #ff5733;
+            color: white;
+            padding: 15px 25px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .mine-btn:hover {
+            background-color: #ff3333;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f1f1f1;
+            padding: 10px;
+        }
+
+        .nav button {
+            flex: 1;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .nav button:hover {
+            background-color: #ff3333;
+        }
+
+        @media (max-width: 600px) {
+            .nav button {
+                font-size: 16px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <div class="character" id="character"></div>
-        <div class="brick"></div>
-        <div class="coin" id="coin" style="display: none;"></div>
+    <!-- Баланс монет -->
+    <div class="balance">Balance: <span id="balance">0</span> coins</div>
+
+    <!-- Кошелек в верхнем правом углу -->
+    <div class="wallet">
+        <img src="https://files.oaiusercontent.com/file-CcuhidyuKGJ7kPyeXMpaNg4W">
+    </div>
+
+    <!-- Контейнер для майнинга -->
+    <div class="mine-container">
+        <button class="mine-btn" id="mine-btn">Mine Crypto</button>
+    </div>
+
+    <!-- Навигация -->
+    <div class="nav">
+        <button onclick="showPage('main-screen')">Main</button>
+        <button onclick="showPage('tasks-screen')">Tasks</button>
+        <button onclick="showPage('friends-screen')">Friends</button>
+        <button onclick="showPage('leaderboard-screen')">Leaderboard</button>
     </div>
 
     <script>
-        const character = document.getElementById('character');
-        const coin = document.getElementById('coin');
+        // Баланс игрока
+        let playerBalance = 0;
 
-        function jump() {
-            character.style.bottom = '150px'; // Перемещение вверх
-            setTimeout(() => {
-                character.style.bottom = '10px'; // Возвращение вниз
-                coin.style.display = 'block'; // Показ монеты
-                setTimeout(() => {
-                    coin.style.display = 'none'; // Скрытие монеты через 1 секунду
-                }, 1000);
-            }, 300); // Возвращение через 300 мс
+        // Функция для обновления баланса на экране
+        function updateBalance() {
+            document.getElementById('balance').innerText = playerBalance;
         }
 
-        character.addEventListener('click', jump);
+        // Обработка кнопки майнинга
+        document.getElementById('mine-btn').addEventListener('click', function() {
+            const now = new Date().getTime();
+            let lastMineTime = localStorage.getItem('lastMineTime') || 0;
+            const eightHours = 8 * 60 * 60 * 1000;
+
+            if (now - lastMineTime > eightHours) {
+                playerBalance += 10; // Начисление 10 монет
+                updateBalance();
+                localStorage.setItem('lastMineTime', now);
+                alert('You mined 10 coins!');
+            } else {
+                alert('You can mine again in 8 hours.');
+            }
+        });
+
+        // Функция для переключения между страницами
+        function showPage(pageId) {
+            const pages = ['main-screen', 'tasks-screen', 'friends-screen', 'leaderboard-screen'];
+            pages.forEach(page => {
+                document.getElementById(page).style.display = (page === pageId) ? 'block' : 'none';
+            });
+        }
+
+        updateBalance();
     </script>
 </body>
 </html>
