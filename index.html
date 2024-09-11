@@ -3,61 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Tap Game</title>
+    <title>Crypto Tap Game</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background: url('/mnt/data/image.png') no-repeat center center;
+            background: url('/mnt/data/A_high-quality,_modern,_and_polished_background_in.png') no-repeat center center;
             background-size: cover;
             height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            align-items: center;
             position: relative;
+            overflow: hidden;
         }
 
-        .top-info {
+        /* Баланс */
+        .balance {
             position: absolute;
             top: 10px;
-            left: 10px;
-            right: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            left: 20px;
+            color: #fff;
             background-color: rgba(0, 0, 0, 0.5);
             padding: 10px;
-            border-radius: 10px;
-        }
-
-        .balance {
-            color: white;
-            font-size: 24px;
-            margin-right: 20px;
-        }
-
-        .mine-btn {
-            background-color: #ff5733;
-            color: white;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
             border-radius: 5px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* Таймер */
+        .timer {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        /* Объект для майнинга (кнопка) */
+        .tap-object {
+            position: absolute;
+            bottom: 150px;
+            width: 200px;
+            height: 200px;
+            background: url('/mnt/data/A_sleek,_modern_button_design_for_a_crypto-themed_.png') no-repeat center;
+            background-size: contain;
             cursor: pointer;
-            margin-left: 20px;
         }
 
-        .wallet img {
-            width: 40px;
-            height: 40px;
-        }
-
+        /* Кнопки внизу */
         .nav {
             display: flex;
             justify-content: space-around;
-            background-color: #f1f1f1;
+            background-color: #333;
             padding: 10px;
+            width: 100%;
         }
 
         .nav button {
@@ -77,59 +82,75 @@
             color: black;
         }
 
-        @media (max-width: 600px) {
-            .nav button {
-                font-size: 16px;
-                padding: 10px;
-            }
+        /* Анимация кликов */
+        @keyframes tapAnimation {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .tap-object:active {
+            animation: tapAnimation 0.3s ease;
         }
 
     </style>
 </head>
 <body>
-    <!-- Верхняя информация с балансом -->
-    <div class="top-info">
-        <div class="balance">Монет: 536 731 306</div>
-        <button class="mine-btn" id="mine-btn">Mint NFT</button>
-        <div class="wallet">
-            <img src="/mnt/data/image.png" alt="TON Wallet">
-        </div>
-    </div>
+
+    <!-- Баланс монет -->
+    <div class="balance">Баланс: <span id="balance">0</span> монет</div>
+
+    <!-- Таймер -->
+    <div class="timer">Время до следующей добычи: <span id="timer">0</span> секунд</div>
+
+    <!-- Объект для майнинга -->
+    <div class="tap-object" id="tap-object"></div>
 
     <!-- Навигация снизу -->
     <div class="nav">
         <button class="active">Майнинг</button>
-        <button>Друзья</button>
         <button>Задачи</button>
+        <button>Друзья</button>
         <button>Лидеры</button>
     </div>
 
     <script>
-        // Баланс игрока
-        let playerBalance = 0;
+        let balance = 0;
+        let miningCooldown = 10; // 10 секунд ожидания перед следующим майнингом
+        let canMine = true;
 
-        // Функция для обновления баланса на экране
-        function updateBalance() {
-            document.getElementById('balance').innerText = playerBalance;
-        }
+        const balanceElement = document.getElementById('balance');
+        const timerElement = document.getElementById('timer');
+        const tapObject = document.getElementById('tap-object');
 
-        // Обработка кнопки майнинга
-        document.getElementById('mine-btn').addEventListener('click', function() {
-            const now = new Date().getTime();
-            let lastMineTime = localStorage.getItem('lastMineTime') || 0;
-            const eightHours = 8 * 60 * 60 * 1000;
+        // Обработка кликов по объекту для майнинга
+        tapObject.addEventListener('click', () => {
+            if (canMine) {
+                balance += 10; // Начисляем 10 монет за клик
+                balanceElement.innerText = balance;
 
-            if (now - lastMineTime > eightHours) {
-                playerBalance += 10; // Начисление 10 монет
-                updateBalance();
-                localStorage.setItem('lastMineTime', now);
-                alert('Вы добыли 10 монет!');
-            } else {
-                alert('Вы можете снова добывать через 8 часов.');
+                // Запуск таймера
+                startCooldown();
             }
         });
 
-        updateBalance();
+        // Функция для запуска таймера после майнинга
+        function startCooldown() {
+            canMine = false;
+            let countdown = miningCooldown;
+
+            const interval = setInterval(() => {
+                timerElement.innerText = countdown;
+                countdown--;
+
+                if (countdown < 0) {
+                    clearInterval(interval);
+                    canMine = true;
+                    timerElement.innerText = '0';
+                }
+            }, 1000);
+        }
     </script>
+
 </body>
 </html>
