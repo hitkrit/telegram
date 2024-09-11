@@ -36,15 +36,15 @@
             cursor: pointer;
         }
         .button {
-            padding: 10px 20px;
+            padding: 8px 15px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             text-align: center;
-            font-size: 16px;
+            font-size: 14px;
             cursor: pointer;
-            margin: 10px;
+            margin: 5px;
             display: inline-block;
-            width: 150px;
+            width: 120px;
         }
         .counter {
             margin-bottom: 10px;
@@ -73,6 +73,9 @@
             justify-content: center;
             margin-top: 20px;
             width: 100%;
+        }
+        #mining {
+            margin-top: 20px; /* Опускаем кнопку на 1 см */
         }
     </style>
     <script>
@@ -127,10 +130,10 @@
 
         <!-- Кликабельная голова -->
         <div class="clickable" onclick="addCoin(event)">
-            <img src="./image.png" alt="Кликабельная голова" width="200" height="200">
+            <img src="./image.png" alt="" width="200" height="200"> <!-- Убрали текст -->
         </div>
 
-        <!-- Кнопка начать майнинг под головой -->
+        <!-- Кнопка начать майнинг под головой и немного ниже -->
         <div id="mining" class="button">Начать майнинг</div>
     </div>
 
