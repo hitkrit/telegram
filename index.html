@@ -34,6 +34,7 @@
         .balance {
             color: white;
             font-size: 24px;
+            margin-right: 20px;
         }
 
         .mine-btn {
@@ -44,6 +45,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            margin-left: 20px;
         }
 
         .wallet img {
@@ -87,8 +89,8 @@
 <body>
     <!-- Верхняя информация с балансом -->
     <div class="top-info">
-        <div class="balance">Balance: <span id="balance">0</span> coins</div>
-        <button class="mine-btn" id="mine-btn">Mine Crypto</button>
+        <div class="balance">Монет: 536 731 306</div>
+        <button class="mine-btn" id="mine-btn">Mint NFT</button>
         <div class="wallet">
             <img src="/mnt/data/image.png" alt="TON Wallet">
         </div>
@@ -96,10 +98,10 @@
 
     <!-- Навигация снизу -->
     <div class="nav">
-        <button class="active">Main</button>
-        <button>Tasks</button>
-        <button>Friends</button>
-        <button>Leaderboard</button>
+        <button class="active">Майнинг</button>
+        <button>Друзья</button>
+        <button>Задачи</button>
+        <button>Лидеры</button>
     </div>
 
     <script>
@@ -121,9 +123,9 @@
                 playerBalance += 10; // Начисление 10 монет
                 updateBalance();
                 localStorage.setItem('lastMineTime', now);
-                alert('You mined 10 coins!');
+                alert('Вы добыли 10 монет!');
             } else {
-                alert('You can mine again in 8 hours.');
+                alert('Вы можете снова добывать через 8 часов.');
             }
         });
 
