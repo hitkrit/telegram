@@ -19,7 +19,6 @@
             position: relative;
             width: 100vw;
             height: 80vh;
-            background-image: url('./hit.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -121,10 +120,10 @@
         <!-- Счетчик монет над головой -->
         <div id="coin-counter" class="counter">Монет: 0</div>
 
-        <!-- Удалена картинка по центру -->
+        <!-- Удалена картинка и квадрат по центру -->
 
         <!-- Кнопка начать майнинг под головой и немного ниже -->
-        <div id="mining" class="button">Начать майнинг</div>
+        <div id="mining" class="button" onclick="addCoin(event)">Начать майнинг</div>
     </div>
 
     <!-- Кнопки внизу, выстроенные по горизонтали -->
