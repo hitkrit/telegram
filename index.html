@@ -1,75 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoRush - Tap Game</title>
+    <title>Мой бот</title>
     <style>
-        body, html {
+        body {
             margin: 0;
             padding: 0;
-            height: 100%;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #222;
+            height: 100vh;
+            background-color: #f0f0f0;
         }
-
-        .game-container {
+        .container {
             position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('./hit.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
-
-        .game-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Растягиваем изображение, сохраняя пропорции */
-        }
-
-        .button-container {
-            position: absolute;
-            bottom: 10px; /* Позиция кнопок внизу */
-            width: 100%;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px;
-        }
-
         .button {
-            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачные кнопки */
-            color: white;
-            border: none;
-            padding: 15px 20px;
-            font-size: 18px;
-            border-radius: 5px;
-            cursor: pointer;
+            position: absolute;
+            padding: 10px 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
             text-align: center;
-            flex-grow: 1;
-            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
         }
-
-        .button:hover {
-            background-color: rgba(0, 0, 0, 0.8); /* Тёмнее при наведении */
+        #profile {
+            top: 10%;
+            left: 10%;
+        }
+        #wallet {
+            top: 10%;
+            right: 10%;
+        }
+        #mining {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        /* Остальные кнопки */
+        #friends {
+            bottom: 10%;
+            left: 10%;
+        }
+        #tasks {
+            bottom: 10%;
+            left: 30%;
+        }
+        #mining_button {
+            bottom: 10%;
+            right: 30%;
+        }
+        #airdrop {
+            bottom: 10%;
+            right: 10%;
         }
     </style>
 </head>
 <body>
-
-<div class="game-container">
-    <!-- Кликабельная голова -->
-    <img src="https://github.com/hitkrit/telegram/raw/de5cb43bc1ec1dd5c17aaf0fcc3de85ffbceeee2/hit.jpg" alt="Click to Earn">
-    <!-- Кнопки -->
-    <div class="button-container">
-        <button class="button" onclick="alert('Задания')">Задания</button>
-        <button class="button" onclick="alert('Airdrop')">Airdrop</button>
-        <button class="button" onclick="alert('Друзья')">Друзья</button>
+    <div class="container">
+        <div id="profile" class="button">Профиль</div>
+        <div id="wallet" class="button">Кошелек</div>
+        <div id="mining" class="button">Начать майнинг</div>
+        <div id="friends" class="button">Друзья</div>
+        <div id="tasks" class="button">Задания</div>
+        <div id="mining_button" class="button">Майнинг</div>
+        <div id="airdrop" class="button">Airdrop</div>
     </div>
-</div>
-
 </body>
 </html>
