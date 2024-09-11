@@ -69,14 +69,13 @@
         }
         .buttons-container {
             display: flex;
-            justify-content: center;
-            flex-wrap: wrap; /* Кнопки будут располагаться в ряд и переходить на новую строку */
-            margin-top: 20px;
+            justify-content: space-between;
+            margin-top: auto;
             width: 90%;
-            gap: 10px; /* Отступы между кнопками */
+            padding-bottom: 20px;
         }
         #mining {
-            margin-top: 20px; /* Подняли кнопку чуть выше */
+            margin-top: 20px; /* Опускаем кнопку чуть выше */
         }
     </style>
     <script>
@@ -143,6 +142,12 @@
 
         function airdropClick() {
             alert('Airdrop: функция пока не реализована');
+        }
+
+        // Функция для кликов на голову
+        function addCoin(event) {
+            coins += 1;
+            updateCounter();
         }
     </script>
 </head>
