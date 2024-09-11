@@ -11,13 +11,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
             height: 100vh;
             background-color: #f0f0f0;
         }
         .container {
             position: relative;
             width: 100vw;
-            height: 100vh;
+            height: 80vh;
             background-image: url('./hit.jpg');
             background-size: cover;
             background-position: center;
@@ -25,23 +26,31 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         }
         .clickable {
-            position: absolute;
-            top: 30%;
+            position: relative;
             width: 200px;
             height: 200px;
             background: transparent;
             cursor: pointer;
         }
         .button {
-            position: absolute;
+            position: relative;
             padding: 10px 20px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
             text-align: center;
             font-size: 16px;
             cursor: pointer;
+            margin: 10px;
+        }
+        .counter {
+            position: relative;
+            margin-bottom: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
         }
         #profile {
             top: 10%;
@@ -50,11 +59,6 @@
         #wallet {
             top: 10%;
             right: 10%;
-        }
-        #mining {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
         /* Остальные кнопки */
         #friends {
@@ -78,16 +82,26 @@
         let coins = 0;
         function addCoin() {
             coins += 1;
-            alert('Монет: ' + coins);
+            document.getElementById('coin-counter').innerText = 'Монет: ' + coins;
         }
     </script>
 </head>
 <body>
     <div class="container">
-        <div class="clickable" onclick="addCoin()"></div>
-        <div id="profile" class="button">Профиль</div>
-        <div id="wallet" class="button">Кошелек</div>
+        <!-- Счетчик монет над головой -->
+        <div id="coin-counter" class="counter">Монет: 0</div>
+
+        <!-- Кликабельная голова -->
+        <div class="clickable" onclick="addCoin()">
+            <img src="./image.png" alt="Кликабельная голова" width="200" height="200">
+        </div>
+
+        <!-- Кнопка начать майнинг под головой -->
         <div id="mining" class="button">Начать майнинг</div>
+    </div>
+
+    <!-- Кнопки внизу -->
+    <div>
         <div id="friends" class="button">Друзья</div>
         <div id="tasks" class="button">Задания</div>
         <div id="mining_button" class="button">Майнинг</div>
