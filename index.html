@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Tap Game</title>
+    <title>Mario Tap Game</title>
     <style>
         body {
             margin: 0;
@@ -15,33 +15,64 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
 
-        .wallet {
+        .top-info {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 10px;
         }
 
-        .wallet img {
-            width: 40px;
-            height: 40px;
+        .character {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 300px;
+            background: url('path_to_mario_character_image') no-repeat center;
+            background-size: contain;
         }
 
         .balance {
-            position: absolute;
-            top: 20px;
-            left: 20px;
+            color: white;
             font-size: 24px;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #333;
             padding: 10px;
+        }
+
+        .nav button {
+            flex: 1;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #ff5733;
+            color: white;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        .nav button.active {
+            background-color: yellow;
+            color: black;
         }
 
         .mine-container {
-            display: flex;
-            justify-content: center;
+            text-align: center;
             margin-bottom: 20px;
         }
 
@@ -59,92 +90,24 @@
             background-color: #ff3333;
         }
 
-        .nav {
-            display: flex;
-            justify-content: space-around;
-            background-color: #f1f1f1;
-            padding: 10px;
-        }
-
-        .nav button {
-            flex: 1;
-            padding: 15px;
-            font-size: 18px;
-            background-color: #ff5733;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .nav button:hover {
-            background-color: #ff3333;
-        }
-
-        @media (max-width: 600px) {
-            .nav button {
-                font-size: 16px;
-                padding: 10px;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Баланс монет -->
-    <div class="balance">Balance: <span id="balance">0</span> coins</div>
-
-    <!-- Кошелек в верхнем правом углу -->
-    <div class="wallet">
-        <img src="https://files.oaiusercontent.com/file-CcuhidyuKGJ7kPyeXMpaNg4W">
+    <!-- Верхняя информация с балансом -->
+    <div class="top-info">
+        <div class="balance">Монет: 536 731 306</div>
+        <div class="level">Уровень: 18</div>
+        <button class="mine-btn">Mint NFT</button>
     </div>
 
-    <!-- Контейнер для майнинга -->
-    <div class="mine-container">
-        <button class="mine-btn" id="mine-btn">Mine Crypto</button>
-    </div>
+    <!-- Персонаж -->
+    <div class="character"></div>
 
-    <!-- Навигация -->
+    <!-- Навигация снизу -->
     <div class="nav">
-        <button onclick="showPage('main-screen')">Main</button>
-        <button onclick="showPage('tasks-screen')">Tasks</button>
-        <button onclick="showPage('friends-screen')">Friends</button>
-        <button onclick="showPage('leaderboard-screen')">Leaderboard</button>
+        <button class="active">Майнинг</button>
+        <button>Друзья</button>
+        <button>Задачи</button>
     </div>
-
-    <script>
-        // Баланс игрока
-        let playerBalance = 0;
-
-        // Функция для обновления баланса на экране
-        function updateBalance() {
-            document.getElementById('balance').innerText = playerBalance;
-        }
-
-        // Обработка кнопки майнинга
-        document.getElementById('mine-btn').addEventListener('click', function() {
-            const now = new Date().getTime();
-            let lastMineTime = localStorage.getItem('lastMineTime') || 0;
-            const eightHours = 8 * 60 * 60 * 1000;
-
-            if (now - lastMineTime > eightHours) {
-                playerBalance += 10; // Начисление 10 монет
-                updateBalance();
-                localStorage.setItem('lastMineTime', now);
-                alert('You mined 10 coins!');
-            } else {
-                alert('You can mine again in 8 hours.');
-            }
-        });
-
-        // Функция для переключения между страницами
-        function showPage(pageId) {
-            const pages = ['main-screen', 'tasks-screen', 'friends-screen', 'leaderboard-screen'];
-            pages.forEach(page => {
-                document.getElementById(page).style.display = (page === pageId) ? 'block' : 'none';
-            });
-        }
-
-        updateBalance();
-    </script>
 </body>
 </html>
