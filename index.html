@@ -3,198 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Inspired Tap Game</title>
+    <title>Interactive Tap Game</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            display: flex;
-            flex-direction: column;
+            font-family: Arial, sans-serif;
+            background-color: #87CEEB;
             height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Фон */
-        .background {
-            background: url('https://example.com/mario-bg.jpg') no-repeat center center;
-            background-size: cover;
-            flex: 1;
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        /* Навигация снизу */
-        .nav {
-            display: flex;
-            justify-content: space-around;
-            background-color: #f1f1f1;
-            padding: 10px;
+        .game-container {
+            position: relative;
+            width: 300px;
+            height: 500px;
+            background-color: #6B8E23;
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .nav button {
-            flex: 1;
-            padding: 15px;
-            font-size: 18px;
-            background-color: #ff5733;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .nav button:hover {
-            background-color: #ff3333;
-        }
-
-        /* Кошелек в правом верхнем углу */
-        .wallet {
+        .character {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            bottom: 10px;
+            left: 130px;
+            width: 50px;
+            height: 50px;
+            background: url('https://files.oaiusercontent.com/file-wB3Xc9WehvtCcGcvLrbrEc7J?se=2024-09-11T20%3A50%3A50Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dad68136b-67f4-4e72-b4f2-0d7320962576.webp&sig=gr9a2tSG1oWVkUiTGx1C7kteNCba0uxje/1L3wK54zk%3D') no-repeat center;
+            background-size: contain;
+            transition: bottom 0.3s;
         }
 
-        .wallet img {
-            width: 40px;
-            height: 40px;
-        }
-
-        /* Элемент для майнинга */
-        .mine-container {
+        .brick {
             position: absolute;
-            bottom: 150px;
-            text-align: center;
-        }
-
-        .mine-container .btn {
-            background-color: #ff5733;
-            color: white;
-            padding: 15px 25px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .mine-container .btn:hover {
-            background-color: #ff3333;
-        }
-
-        .coin-counter {
-            position: absolute;
-            top: 50px;
-            text-align: center;
-            font-size: 24px;
-            color: #fff;
-            font-weight: bold;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+            background-color: #8B4513;
+            border: 2px solid #333;
             border-radius: 5px;
         }
 
-        /* Адаптивный дизайн */
-        @media (max-width: 600px) {
-            .nav button {
-                font-size: 16px;
-                padding: 10px;
-            }
+        .coin {
+            position: absolute;
+            top: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background: url('https://example.com/coin.png') no-repeat center;
+            background-size: contain;
         }
     </style>
 </head>
 <body>
-    <!-- Главный экран с фоном -->
-    <div class="background" id="main-screen">
-        <div class="wallet">
-            <img src="https://example.com/ton-wallet-icon.png" alt="TON Wallet">
-        </div>
-        <div class="coin-counter">Balance: <span id="balance">0</span> coins</div>
-        <div class="mine-container">
-            <button class="btn" id="mine-btn">Mine Crypto</button>
-        </div>
-    </div>
-
-    <!-- Навигация внизу экрана -->
-    <div class="nav">
-        <button onclick="showPage('main-screen')">Main</button>
-        <button onclick="showPage('tasks-screen')">Tasks</button>
-        <button onclick="showPage('friends-screen')">Friends</button>
-        <button onclick="showPage('leaderboard-screen')">Leaderboard</button>
-    </div>
-
-    <!-- Другие страницы -->
-    <div id="tasks-screen" style="display:none;">
-        <h2>Tasks</h2>
-        <ul id="task-list">
-            <!-- Задания будут добавляться динамически -->
-        </ul>
-    </div>
-
-    <div id="friends-screen" style="display:none;">
-        <h2>Invite Friends</h2>
-        <p>Share your referral link:</p>
-        <input type="text" id="referral-link" readonly value="https://example.com/referral/123">
-    </div>
-
-    <div id="leaderboard-screen" style="display:none;">
-        <h2>Leaderboard</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Player</th>
-                    <th>Coins</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboard">
-                <!-- Лидеры будут отображаться динамически -->
-            </tbody>
-        </table>
+    <div class="game-container">
+        <div class="character" id="character"></div>
+        <div class="brick"></div>
+        <div class="coin" id="coin" style="display: none;"></div>
     </div>
 
     <script>
-        // Баланс игрока
-        let playerBalance = 0;
+        const character = document.getElementById('character');
+        const coin = document.getElementById('coin');
 
-        // Функция для обновления баланса на экране
-        function updateBalance() {
-            document.getElementById('balance').innerText = playerBalance;
+        function jump() {
+            character.style.bottom = '150px'; // Перемещение вверх
+            setTimeout(() => {
+                character.style.bottom = '10px'; // Возвращение вниз
+                coin.style.display = 'block'; // Показ монеты
+                setTimeout(() => {
+                    coin.style.display = 'none'; // Скрытие монеты через 1 секунду
+                }, 1000);
+            }, 300); // Возвращение через 300 мс
         }
 
-        // Обработка нажатий на картинку (фон)
-        document.querySelector('.background').addEventListener('click', function() {
-            playerBalance += 1; // Начисление 1 монеты за клик
-            updateBalance();
-        });
-
-        // Обработка кнопки майнинга
-        document.getElementById('mine-btn').addEventListener('click', function() {
-            const now = new Date().getTime();
-            let lastMineTime = localStorage.getItem('lastMineTime') || 0;
-            const eightHours = 8 * 60 * 60 * 1000;
-
-            if (now - lastMineTime > eightHours) {
-                playerBalance += 10; // Начисление 10 монет
-                updateBalance();
-                localStorage.setItem('lastMineTime', now);
-                alert('You mined 10 coins!');
-            } else {
-                alert('You can mine again in 8 hours.');
-            }
-        });
-
-        // Функция для переключения между страницами
-        function showPage(pageId) {
-            const pages = ['main-screen', 'tasks-screen', 'friends-screen', 'leaderboard-screen'];
-            pages.forEach(page => {
-                document.getElementById(page).style.display = (page === pageId) ? 'block' : 'none';
-            });
-        }
-
-        updateBalance();
+        character.addEventListener('click', jump);
     </script>
 </body>
 </html>
-
