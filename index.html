@@ -32,7 +32,7 @@
         }
         .button {
             padding: 10px 20px;
-            background: #ff4757; /* Яркий цвет */
+            background: #ff7f50; /* Оранжевый цвет */
             border-radius: 20px;
             text-align: center;
             font-size: 16px;
@@ -44,7 +44,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
         }
         .button:hover {
-            background: #ff6b81; /* Цвет при наведении */
+            background: #ff4500; /* Более яркий оранжевый при наведении */
             transform: translateY(-3px); /* Анимация при наведении */
         }
         .counter {
@@ -59,11 +59,11 @@
             border-radius: 5px;
             overflow: hidden;
             margin-bottom: 20px;
-            border: 2px solid #b91d73;
+            border: 2px solid #ff7f50;
         }
         .progress-bar-fill {
             height: 20px;
-            background-color: #f953c6;
+            background-color: #ff4500;
             width: 0%;
             transition: width 1s linear;
         }
@@ -76,7 +76,7 @@
             gap: 10px; /* Отступы между кнопками */
         }
         #mining {
-            margin-top: 40px; /* Подняли кнопку выше */
+            margin-top: 20px; /* Подняли кнопку чуть выше */
         }
     </style>
     <script>
@@ -150,6 +150,9 @@
     <div class="container">
         <!-- Счетчик монет над головой -->
         <div id="coin-counter" class="counter">Монет: 0</div>
+
+        <!-- Изображение головы -->
+        <img src="./hit.jpg" alt="Кликабельная голова" class="clickable-head" onclick="addCoin(event)">
 
         <!-- Прогресс бар для майнинга -->
         <div class="progress-bar">
