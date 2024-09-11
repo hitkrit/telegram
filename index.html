@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mario Crypto Game</title>
+    <title>Mario Inspired Tap Game</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #87CEEB, #fff);
             margin: 0;
             padding: 0;
             display: flex;
@@ -15,160 +15,127 @@
             align-items: center;
             justify-content: center;
             height: 100vh;
-            color: #333;
         }
+
         .container {
-            width: 90%;
-            max-width: 400px;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
+            max-width: 600px;
+            margin: 0 auto;
             text-align: center;
-            color: #FF6347;
         }
-        .balance {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 20px;
-            color: #333;
-        }
-        .button {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 10px 0;
-            text-align: center;
-            background-color: #FF6347;
+
+        .btn {
+            background-color: #ff5733;
             color: white;
+            padding: 15px 25px;
+            font-size: 18px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
-        .button:hover {
-            background-color: #FF4500;
+
+        .btn:hover {
+            background-color: #ff3333;
         }
+
         .leaderboard {
-            margin-top: 20px;
-            border-collapse: collapse;
-            width: 100%;
+            margin-top: 30px;
         }
+
+        .leaderboard table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
         .leaderboard th, .leaderboard td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: center;
         }
-        .leaderboard th {
-            background-color: #FF6347;
-            color: white;
-        }
-        .referral {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .referral a {
-            color: #FF6347;
-            text-decoration: none;
-        }
-        .footer {
-            margin-top: 20px;
-            text-align: center;
-            font-size: 12px;
-            color: #777;
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .btn {
+                font-size: 16px;
+                padding: 10px 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Mario Crypto Game</h1>
-
-        <!-- Отображение баланса -->
-        <div class="balance" id="balance">Баланс: 0 монет</div>
-
-        <!-- Кнопка для майнинга -->
-        <button class="button" id="mine-btn" onclick="startMining()">Начать майнинг</button>
-
-        <!-- Кнопка для подключения кошелька -->
-        <button class="button" id="connect-wallet-btn" onclick="connectWallet()">Подключить кошелек TON</button>
-
-        <!-- Задания -->
-        <button class="button" onclick="alert('Задание добавлено!')">Выполнять задания</button>
-
-        <!-- Таблица лидеров -->
-        <table class="leaderboard">
-            <thead>
-                <tr>
-                    <th>Игрок</th>
-                    <th>Монеты</th>
-                </tr>
-            </thead>
-            <tbody id="leaderboard-body">
-                <!-- Пример данных -->
-                <tr><td>Игрок 1</td><td>1000</td></tr>
-                <tr><td>Игрок 2</td><td>850</td></tr>
-                <tr><td>Игрок 3</td><td>600</td></tr>
-            </tbody>
-        </table>
-
-        <!-- Реферальная ссылка -->
-        <div class="referral">
-            <p>Пригласите друзей и получите бонус!</p>
-            <a href="#" id="referral-link">Моя реферальная ссылка</a>
+        <h1>Mario Inspired Game</h1>
+        <p>Welcome, Player! Your balance: <span id="balance">0</span> coins</p>
+        <button class="btn" id="mine-btn">Mine Crypto</button>
+        <div id="tasks">
+            <h2>Available Tasks</h2>
+            <ul id="task-list">
+                <!-- Задания будут добавляться динамически -->
+            </ul>
         </div>
-
-        <div class="footer">
-            <p>&copy; 2024 Mario Crypto Game</p>
+        <div class="leaderboard">
+            <h2>Leaderboard</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Player</th>
+                        <th>Coins</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboard">
+                    <!-- Лидеры будут отображаться динамически -->
+                </tbody>
+            </table>
         </div>
     </div>
 
     <script>
-        let balance = 0;
-        let miningInProgress = false;
+        // Баланс игрока
+        let playerBalance = 0;
 
-        // Функция для старта майнинга
-        function startMining() {
-            if (miningInProgress) {
-                alert('Майнинг уже идет! Пожалуйста, подождите 8 часов.');
-                return;
-            }
-
-            miningInProgress = true;
-            document.getElementById('mine-btn').innerText = 'Майнинг...';
-
-            // Таймер на 8 часов (8 часов = 28800 секунд)
-            setTimeout(() => {
-                balance += 100; // Добавить 100 монет после майнинга
-                updateBalance();
-                miningInProgress = false;
-                document.getElementById('mine-btn').innerText = 'Забрать награду';
-            }, 5000); // Для тестов сократим до 5 секунд
-        }
-
-        // Функция для обновления баланса
+        // Функция для обновления баланса на экране
         function updateBalance() {
-            document.getElementById('balance').innerText = `Баланс: ${balance} монет`;
+            document.getElementById('balance').innerText = playerBalance;
         }
 
-        // Функция для подключения кошелька через блокчейн TON
-        function connectWallet() {
-            alert('Подключение к кошельку TON...');
-            // Логика интеграции TON SDK или TON API должна быть добавлена на серверной части
+        // Обработка кнопки майнинга
+        document.getElementById('mine-btn').addEventListener('click', function() {
+            const now = new Date().getTime();
+            let lastMineTime = localStorage.getItem('lastMineTime') || 0;
+            const eightHours = 8 * 60 * 60 * 1000;
+
+            if (now - lastMineTime > eightHours) {
+                playerBalance += 10; // Начисление 10 монет
+                updateBalance();
+                localStorage.setItem('lastMineTime', now);
+                alert('You mined 10 coins!');
+            } else {
+                alert('You can mine again in 8 hours.');
+            }
+        });
+
+        // Функция для отображения таблицы лидеров (упрощенная версия)
+        function updateLeaderboard() {
+            const leaderboard = document.getElementById('leaderboard');
+            leaderboard.innerHTML = ''; // Очищаем таблицу
+            const leaders = [
+                { rank: 1, player: 'Player1', coins: 50 },
+                { rank: 2, player: 'Player2', coins: 40 },
+                { rank: 3, player: 'Player3', coins: 30 }
+            ];
+
+            leaders.forEach(leader => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${leader.rank}</td><td>${leader.player}</td><td>${leader.coins}</td>`;
+                leaderboard.appendChild(row);
+            });
         }
 
-        // Генерация реферальной ссылки
-        function generateReferralLink() {
-            const referralId = 'user123'; // Пример уникального идентификатора игрока
-            const referralLink = `https://telegram.me/your_game_bot?start=${referralId}`;
-            document.getElementById('referral-link').href = referralLink;
-            document.getElementById('referral-link').innerText = referralLink;
-        }
-
-        // Инициализация
-        generateReferralLink();
+        updateBalance();
+        updateLeaderboard();
     </script>
 </body>
 </html>
