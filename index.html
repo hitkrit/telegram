@@ -36,7 +36,6 @@
             cursor: pointer;
         }
         .button {
-            position: relative;
             padding: 10px 20px;
             background-color: rgba(255, 255, 255, 0.8);
             border-radius: 8px;
@@ -44,9 +43,10 @@
             font-size: 16px;
             cursor: pointer;
             margin: 10px;
+            display: inline-block;
+            width: 150px;
         }
         .counter {
-            position: relative;
             margin-bottom: 10px;
             font-size: 24px;
             font-weight: bold;
@@ -67,6 +67,11 @@
                 opacity: 0;
                 transform: translateY(-100px);
             }
+        }
+        .buttons-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
         }
     </style>
     <script>
@@ -95,6 +100,23 @@
                 coin.remove();
             }, 1000);
         }
+
+        // Функции для кликов по нижним кнопкам
+        function friendsClick() {
+            alert('Друзья: функция пока не реализована');
+        }
+
+        function tasksClick() {
+            alert('Задания: функция пока не реализована');
+        }
+
+        function miningClick() {
+            alert('Майнинг: функция пока не реализована');
+        }
+
+        function airdropClick() {
+            alert('Airdrop: функция пока не реализована');
+        }
     </script>
 </head>
 <body>
@@ -112,11 +134,11 @@
     </div>
 
     <!-- Кнопки внизу -->
-    <div>
-        <div id="friends" class="button">Друзья</div>
-        <div id="tasks" class="button">Задания</div>
-        <div id="mining_button" class="button">Майнинг</div>
-        <div id="airdrop" class="button">Airdrop</div>
+    <div class="buttons-container">
+        <div id="friends" class="button" onclick="friendsClick()">Друзья</div>
+        <div id="tasks" class="button" onclick="tasksClick()">Задания</div>
+        <div id="mining_button" class="button" onclick="miningClick()">Майнинг</div>
+        <div id="airdrop" class="button" onclick="airdropClick()">Airdrop</div>
     </div>
 </body>
 </html>
