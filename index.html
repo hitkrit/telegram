@@ -10,7 +10,7 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             height: 100vh;
             background: linear-gradient(45deg, #222, #333);
@@ -19,15 +19,13 @@
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
 
         .game-container {
-            position: relative;
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex-grow: 1;
         }
 
         .game-container img {
@@ -41,30 +39,28 @@
             font-size: 24px;
         }
 
-        .buttons-container {
-            position: absolute;
-            bottom: 20px;
+        /* Стили для кнопок */
+        .button-container {
             display: flex;
             justify-content: space-around;
             width: 100%;
-            padding: 0 20px;
+            padding: 10px 0;
+            background-color: #111;
         }
 
-        .button {
+        .game-button {
             padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
             font-size: 18px;
+            color: #fff;
+            background-color: #444;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
-            text-align: center;
-            flex-grow: 1;
-            margin: 0 10px;
+            transition: background-color 0.3s ease;
         }
 
-        .button:hover {
-            background-color: #45a049;
+        .game-button:hover {
+            background-color: #888;
         }
     </style>
 </head>
@@ -80,11 +76,11 @@
     </div>
 </div>
 
-<!-- Кнопки -->
-<div class="buttons-container">
-    <button class="button" onclick="openTasks()">Задания</button>
-    <button class="button" onclick="openAirdrop()">Airdrop</button>
-    <button class="button" onclick="openFriends()">Друзья</button>
+<!-- Кнопки внизу -->
+<div class="button-container">
+    <button class="game-button" onclick="handleClick('Задания')">Задания</button>
+    <button class="game-button" onclick="handleClick('Airdrop')">Airdrop</button>
+    <button class="game-button" onclick="handleClick('Друзья')">Друзья</button>
 </div>
 
 <script>
@@ -97,16 +93,8 @@
         document.getElementById("coinCount").textContent = coinCount;
     }
 
-    function openTasks() {
-        alert("Открыть раздел заданий");
-    }
-
-    function openAirdrop() {
-        alert("Открыть раздел Airdrop");
-    }
-
-    function openFriends() {
-        alert("Открыть раздел Друзья");
+    function handleClick(buttonName) {
+        alert('Вы нажали на кнопку: ' + buttonName);
     }
 </script>
 
