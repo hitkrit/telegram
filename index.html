@@ -13,63 +13,34 @@
             background-size: cover;
             height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            position: relative;
         }
-
-        /* Баланс */
+        #gameCanvas {
+            width: 100%;
+            height: 100%;
+        }
         .balance {
-            position: fixed;
-            top: 20px;
+            position: absolute;
+            top: 10px;
             left: 20px;
             color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
             font-size: 24px;
             font-weight: bold;
-        }
-
-        /* Таймер */
-        .timer {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            color: #fff;
-            background-color: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.5);
             padding: 10px;
-            border-radius: 5px;
-            font-size: 18px;
+            border-radius: 10px;
         }
-
-        /* Объект для майнинга */
-        .tap-object {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            background: url('/mnt/data/A_sleek,_modern_button_design_for_a_crypto-themed_.png') no-repeat center;
-            background-size: contain;
-            cursor: pointer;
-            margin-top: auto;
-            margin-bottom: auto;
-        }
-
-        /* Кнопки внизу */
         .nav {
-            display: flex;
-            justify-content: space-around;
-            background-color: #333;
-            padding: 10px;
-            width: 100%;
             position: fixed;
             bottom: 0;
-            left: 0;
+            display: flex;
+            width: 100%;
+            background-color: #333;
+            justify-content: space-around;
+            padding: 10px;
         }
-
         .nav button {
-            flex: 1;
             padding: 15px;
             font-size: 18px;
             background-color: #ff5733;
@@ -77,39 +48,19 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin: 0 5px;
         }
-
         .nav button.active {
             background-color: yellow;
             color: black;
         }
-
-        /* Анимация кликов */
-        @keyframes tapAnimation {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
-        }
-
-        .tap-object:active {
-            animation: tapAnimation 0.3s ease;
-        }
-
     </style>
 </head>
 <body>
 
-    <!-- Баланс монет -->
     <div class="balance">Баланс: <span id="balance">0</span> монет</div>
 
-    <!-- Таймер -->
-    <div class="timer">Время до следующей добычи: <span id="timer">0</span> секунд</div>
+    <canvas id="gameCanvas"></canvas>
 
-    <!-- Объект для майнинга -->
-    <div class="tap-object" id="tap-object"></div>
-
-    <!-- Навигация снизу -->
     <div class="nav">
         <button class="active">Майнинг</button>
         <button>Задачи</button>
@@ -117,41 +68,63 @@
         <button>Лидеры</button>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
     <script>
-        let balance = 0;
-        let miningCooldown = 10; // 10 секунд ожидания перед следующим майнингом
-        let canMine = true;
-
-        const balanceElement = document.getElementById('balance');
-        const timerElement = document.getElementById('timer');
-        const tapObject = document.getElementById('tap-object');
-
-        // Обработка кликов по объекту для майнинга
-        tapObject.addEventListener('click', () => {
-            if (canMine) {
-                balance += 10; // Начисляем 10 монет за клик
-                balanceElement.innerText = balance;
-
-                // Запуск таймера
-                startCooldown();
-            }
-        });
-
-        // Функция для запуска таймера после майнинга
-        function startCooldown() {
-            canMine = false;
-            let countdown = miningCooldown;
-
-            const interval = setInterval(() => {
-                timerElement.innerText = countdown;
-                countdown--;
-
-                if (countdown < 0) {
-                    clearInterval(interval);
-                    canMine = true;
-                    timerElement.innerText = '0';
+        let config = {
+            type: Phaser.AUTO,
+            width: window.innerWidth,
+            height: window.innerHeight,
+            physics: {
+                default: 'arcade',
+                arcade: {
+                    gravity: { y: 0 }
                 }
-            }, 1000);
+            },
+            scene: {
+                preload: preload,
+                create: create,
+                update: update
+            }
+        };
+
+        let game = new Phaser.Game(config);
+        let balance = 0;
+        let canMine = true;
+        let miningCooldown = 2000; // 2 seconds cooldown
+        let lastMiningTime = 0;
+        let miningObject;
+        let balanceText;
+
+        function preload() {
+            this.load.image('button', '/mnt/data/A_sleek,_modern_button_design_for_a_crypto-themed_.png');
+        }
+
+        function create() {
+            miningObject = this.physics.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'button').setInteractive();
+            miningObject.setScale(0.5); // Уменьшаем размер
+
+            balanceText = document.getElementById('balance');
+
+            miningObject.on('pointerdown', function (pointer) {
+                if (canMine && Date.now() - lastMiningTime > miningCooldown) {
+                    balance += 10; // Добавляем 10 монет
+                    lastMiningTime = Date.now();
+                    balanceText.innerText = balance;
+
+                    // Визуальная анимация
+                    miningObject.setScale(0.55);
+                    this.tweens.add({
+                        targets: miningObject,
+                        scale: 0.5,
+                        ease: 'Power1',
+                        duration: 200
+                    });
+                }
+            }, this);
+        }
+
+        function update() {
+            // Можно добавить логику обновления игры
         }
     </script>
 
