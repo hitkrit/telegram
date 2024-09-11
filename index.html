@@ -28,13 +28,6 @@
             align-items: center;
             flex-direction: column;
         }
-        .clickable {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            background: transparent;
-            cursor: pointer;
-        }
         .button {
             padding: 8px 15px;
             background-color: rgba(255, 255, 255, 0.8);
@@ -128,10 +121,7 @@
         <!-- Счетчик монет над головой -->
         <div id="coin-counter" class="counter">Монет: 0</div>
 
-        <!-- Кликабельная голова -->
-        <div class="clickable" onclick="addCoin(event)">
-            <img src="./image.png" alt="" width="200" height="200"> <!-- Убрали текст -->
-        </div>
+        <!-- Удалена картинка по центру -->
 
         <!-- Кнопка начать майнинг под головой и немного ниже -->
         <div id="mining" class="button">Начать майнинг</div>
