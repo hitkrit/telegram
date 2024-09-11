@@ -3,177 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мой бот</title>
+    <title>Mario Crypto Game</title>
     <style>
         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             height: 100vh;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            position: relative;
-            width: 100vw;
-            height: 80vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .clickable-head {
-            width: 240px; /* Увеличили ширину на 20% */
-            height: auto;
-            cursor: pointer;
-        }
-        .button {
-            padding: 8px 15px; /* Сделаем кнопки более компактными */
-            background: #ff7f50; /* Оранжевый цвет */
-            border-radius: 15px; /* Немного уменьшили радиус */
-            text-align: center;
-            font-size: 14px; /* Уменьшили размер шрифта */
-            color: white;
-            cursor: pointer;
-            margin: 5px; /* Меньший отступ */
-            display: inline-block;
-            transition: background 0.3s ease, transform 0.2s ease; /* Эффект нажатия */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
-        }
-        .button:hover {
-            background: #ff4500; /* Более яркий оранжевый при наведении */
-            transform: translateY(-3px); /* Анимация при наведении */
-        }
-        .counter {
-            margin-bottom: 20px;
-            font-size: 28px;
-            font-weight: bold;
             color: #333;
         }
-        .progress-bar {
-            width: 100%;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            overflow: hidden;
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #FF6347;
+        }
+        .balance {
+            text-align: center;
             margin-bottom: 20px;
-            border: 2px solid #ff7f50;
+            font-size: 20px;
+            color: #333;
         }
-        .progress-bar-fill {
-            height: 20px;
-            background-color: #ff4500;
-            width: 0%;
-            transition: width 1s linear;
+        .button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+            background-color: #FF6347;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .buttons-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: auto;
-            width: 80%; /* Сделаем ширину поменьше */
-            padding-bottom: 20px;
+        .button:hover {
+            background-color: #FF4500;
         }
-        #mining {
-            margin-top: 20px; /* Подняли кнопку чуть выше */
+        .leaderboard {
+            margin-top: 20px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .leaderboard th, .leaderboard td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .leaderboard th {
+            background-color: #FF6347;
+            color: white;
+        }
+        .referral {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .referral a {
+            color: #FF6347;
+            text-decoration: none;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
         }
     </style>
-    <script>
-        let coins = 0;
-        let isMining = false;
-        let interval;
-        let secondsPassed = 0;
-        const totalSeconds = 8 * 60 * 60; // 8 часов = 28,800 секунд
-
-        // Функция запуска майнинга
-        function startMining() {
-            if (isMining) return;
-            isMining = true;
-            secondsPassed = 0;
-            document.getElementById('mining').innerText = 'Майнинг...'; // Меняем текст на кнопке
-
-            interval = setInterval(() => {
-                secondsPassed++;
-                coins++;
-                updateCounter();
-                updateProgressBar();
-
-                // Если прошло 8 часов
-                if (secondsPassed >= totalSeconds) {
-                    clearInterval(interval);
-                    document.getElementById('mining').innerText = 'Забрать награду';
-                    document.getElementById('mining').onclick = claimReward;
-                }
-            }, 1000); // Каждый 1 секунду
-        }
-
-        // Функция для обновления счётчика
-        function updateCounter() {
-            document.getElementById('coin-counter').innerText = `Монет: ${coins}`;
-        }
-
-        // Функция для обновления прогресс-бара
-        function updateProgressBar() {
-            const progressPercentage = (secondsPassed / totalSeconds) * 100;
-            document.querySelector('.progress-bar-fill').style.width = `${progressPercentage}%`;
-        }
-
-        // Функция для получения награды
-        function claimReward() {
-            alert(`Вы забрали ${coins} монет!`);
-            document.getElementById('mining').innerText = 'Начать майнинг';
-            document.getElementById('mining').onclick = startMining;
-            document.querySelector('.progress-bar-fill').style.width = '0%';
-            isMining = false;
-        }
-
-        // Функции для кликов по нижним кнопкам (пример)
-        function friendsClick() {
-            alert('Друзья: функция пока не реализована');
-        }
-
-        function tasksClick() {
-            alert('Задания: функция пока не реализована');
-        }
-
-        function miningClick() {
-            alert('Майнинг: функция пока не реализована');
-        }
-
-        function airdropClick() {
-            alert('Airdrop: функция пока не реализована');
-        }
-
-        // Функция для кликов на голову
-        function addCoin(event) {
-            coins += 1;
-            updateCounter();
-        }
-    </script>
 </head>
 <body>
     <div class="container">
-        <!-- Счетчик монет над головой -->
-        <div id="coin-counter" class="counter">Монет: 0</div>
+        <h1>Mario Crypto Game</h1>
 
-        <!-- Изображение головы -->
-        <img src="./hit.jpg" alt="Кликабельная голова" class="clickable-head" onclick="addCoin(event)">
+        <!-- Отображение баланса -->
+        <div class="balance" id="balance">Баланс: 0 монет</div>
 
-        <!-- Прогресс бар для майнинга -->
-        <div class="progress-bar">
-            <div class="progress-bar-fill"></div>
+        <!-- Кнопка для майнинга -->
+        <button class="button" id="mine-btn" onclick="startMining()">Начать майнинг</button>
+
+        <!-- Кнопка для подключения кошелька -->
+        <button class="button" id="connect-wallet-btn" onclick="connectWallet()">Подключить кошелек TON</button>
+
+        <!-- Задания -->
+        <button class="button" onclick="alert('Задание добавлено!')">Выполнять задания</button>
+
+        <!-- Таблица лидеров -->
+        <table class="leaderboard">
+            <thead>
+                <tr>
+                    <th>Игрок</th>
+                    <th>Монеты</th>
+                </tr>
+            </thead>
+            <tbody id="leaderboard-body">
+                <!-- Пример данных -->
+                <tr><td>Игрок 1</td><td>1000</td></tr>
+                <tr><td>Игрок 2</td><td>850</td></tr>
+                <tr><td>Игрок 3</td><td>600</td></tr>
+            </tbody>
+        </table>
+
+        <!-- Реферальная ссылка -->
+        <div class="referral">
+            <p>Пригласите друзей и получите бонус!</p>
+            <a href="#" id="referral-link">Моя реферальная ссылка</a>
         </div>
 
-        <!-- Кнопка начать майнинг -->
-        <div id="mining" class="button" onclick="startMining()">Начать майнинг</div>
+        <div class="footer">
+            <p>&copy; 2024 Mario Crypto Game</p>
+        </div>
     </div>
 
-    <!-- Кнопки внизу, выстроенные по горизонтали -->
-    <div class="buttons-container">
-        <div id="friends" class="button" onclick="friendsClick()">Друзья</div>
-        <div id="tasks" class="button" onclick="tasksClick()">Задания</div>
-        <div id="mining_button" class="button" onclick="miningClick()">Майнинг</div>
-        <div id="airdrop" class="button" onclick="airdropClick()">Airdrop</div>
-    </div>
+    <script>
+        let balance = 0;
+        let miningInProgress = false;
+
+        // Функция для старта майнинга
+        function startMining() {
+            if (miningInProgress) {
+                alert('Майнинг уже идет! Пожалуйста, подождите 8 часов.');
+                return;
+            }
+
+            miningInProgress = true;
+            document.getElementById('mine-btn').innerText = 'Майнинг...';
+
+            // Таймер на 8 часов (8 часов = 28800 секунд)
+            setTimeout(() => {
+                balance += 100; // Добавить 100 монет после майнинга
+                updateBalance();
+                miningInProgress = false;
+                document.getElementById('mine-btn').innerText = 'Забрать награду';
+            }, 5000); // Для тестов сократим до 5 секунд
+        }
+
+        // Функция для обновления баланса
+        function updateBalance() {
+            document.getElementById('balance').innerText = `Баланс: ${balance} монет`;
+        }
+
+        // Функция для подключения кошелька через блокчейн TON
+        function connectWallet() {
+            alert('Подключение к кошельку TON...');
+            // Логика интеграции TON SDK или TON API должна быть добавлена на серверной части
+        }
+
+        // Генерация реферальной ссылки
+        function generateReferralLink() {
+            const referralId = 'user123'; // Пример уникального идентификатора игрока
+            const referralLink = `https://telegram.me/your_game_bot?start=${referralId}`;
+            document.getElementById('referral-link').href = referralLink;
+            document.getElementById('referral-link').innerText = referralLink;
+        }
+
+        // Инициализация
+        generateReferralLink();
+    </script>
 </body>
 </html>
