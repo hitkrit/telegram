@@ -31,21 +31,20 @@
             cursor: pointer;
         }
         .button {
-            padding: 12px 25px;
-            background: linear-gradient(135deg, #f953c6, #b91d73); /* Яркий градиент */
-            border-radius: 12px;
+            padding: 10px 20px;
+            background: #ff4757; /* Яркий цвет */
+            border-radius: 20px;
             text-align: center;
             font-size: 16px;
             color: white;
             cursor: pointer;
             margin: 10px;
             display: inline-block;
-            width: 160px;
             transition: background 0.3s ease, transform 0.2s ease; /* Эффект нажатия */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень для кнопки */
         }
         .button:hover {
-            background: linear-gradient(135deg, #ff6fa5, #c72d91); /* Более светлый градиент при наведении */
+            background: #ff6b81; /* Цвет при наведении */
             transform: translateY(-3px); /* Анимация при наведении */
         }
         .counter {
@@ -71,11 +70,13 @@
         .buttons-container {
             display: flex;
             justify-content: center;
+            flex-wrap: wrap; /* Кнопки будут располагаться в ряд и переходить на новую строку */
             margin-top: 20px;
-            width: 100%;
+            width: 90%;
+            gap: 10px; /* Отступы между кнопками */
         }
         #mining {
-            margin-top: 20px; /* Опускаем кнопку на 1 см */
+            margin-top: 40px; /* Подняли кнопку выше */
         }
     </style>
     <script>
