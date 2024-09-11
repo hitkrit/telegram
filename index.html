@@ -54,21 +54,19 @@
             font-weight: bold;
             color: #333;
         }
-        .coin {
-            position: absolute;
-            font-size: 20px;
-            color: gold;
-            animation: fly 1s ease-out forwards;
+        .progress-bar {
+            width: 100%;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid #b91d73;
         }
-        @keyframes fly {
-            0% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px);
-            }
+        .progress-bar-fill {
+            height: 20px;
+            background-color: #f953c6;
+            width: 0%;
+            transition: width 1s linear;
         }
         .buttons-container {
             display: flex;
@@ -82,32 +80,54 @@
     </style>
     <script>
         let coins = 0;
+        let isMining = false;
+        let interval;
+        let secondsPassed = 0;
+        const totalSeconds = 8 * 60 * 60; // 8 часов = 28,800 секунд
 
-        function addCoin(event) {
-            coins += 1;
-            document.getElementById('coin-counter').innerText = 'Монет: ' + coins;
+        // Функция запуска майнинга
+        function startMining() {
+            if (isMining) return;
+            isMining = true;
+            secondsPassed = 0;
+            document.getElementById('mining').innerText = 'Майнинг...'; // Меняем текст на кнопке
 
-            // Создаем элемент монеты
-            const coin = document.createElement('div');
-            coin.innerText = '1';
-            coin.classList.add('coin');
-            document.body.appendChild(coin);
+            interval = setInterval(() => {
+                secondsPassed++;
+                coins++;
+                updateCounter();
+                updateProgressBar();
 
-            // Определяем позицию клика
-            const x = event.clientX;
-            const y = event.clientY;
-
-            // Устанавливаем начальную позицию монеты
-            coin.style.left = `${x}px`;
-            coin.style.top = `${y}px`;
-
-            // Удаляем монету после завершения анимации
-            setTimeout(() => {
-                coin.remove();
-            }, 1000);
+                // Если прошло 8 часов
+                if (secondsPassed >= totalSeconds) {
+                    clearInterval(interval);
+                    document.getElementById('mining').innerText = 'Забрать награду';
+                    document.getElementById('mining').onclick = claimReward;
+                }
+            }, 1000); // Каждый 1 секунду
         }
 
-        // Функции для кликов по нижним кнопкам
+        // Функция для обновления счётчика
+        function updateCounter() {
+            document.getElementById('coin-counter').innerText = `Монет: ${coins}`;
+        }
+
+        // Функция для обновления прогресс-бара
+        function updateProgressBar() {
+            const progressPercentage = (secondsPassed / totalSeconds) * 100;
+            document.querySelector('.progress-bar-fill').style.width = `${progressPercentage}%`;
+        }
+
+        // Функция для получения награды
+        function claimReward() {
+            alert(`Вы забрали ${coins} монет!`);
+            document.getElementById('mining').innerText = 'Начать майнинг';
+            document.getElementById('mining').onclick = startMining;
+            document.querySelector('.progress-bar-fill').style.width = '0%';
+            isMining = false;
+        }
+
+        // Функции для кликов по нижним кнопкам (пример)
         function friendsClick() {
             alert('Друзья: функция пока не реализована');
         }
@@ -130,11 +150,13 @@
         <!-- Счетчик монет над головой -->
         <div id="coin-counter" class="counter">Монет: 0</div>
 
-        <!-- Кликабельная голова -->
-        <img src="./hit.jpg" alt="Кликабельная голова" class="clickable-head" onclick="addCoin(event)">
+        <!-- Прогресс бар для майнинга -->
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
 
-        <!-- Кнопка начать майнинг под головой и немного ниже -->
-        <div id="mining" class="button">Начать майнинг</div>
+        <!-- Кнопка начать майнинг -->
+        <div id="mining" class="button" onclick="startMining()">Начать майнинг</div>
     </div>
 
     <!-- Кнопки внизу, выстроенные по горизонтали -->
