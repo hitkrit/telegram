@@ -11,36 +11,37 @@
             height: 100%;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             background-color: #222;
         }
 
         .game-container {
-            flex-grow: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .game-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Растягивает картинку, сохраняя пропорции */
+            object-fit: cover; /* Растягиваем изображение, сохраняя пропорции */
         }
 
         .button-container {
+            position: absolute;
+            bottom: 10px; /* Позиция кнопок внизу */
+            width: 100%;
             display: flex;
             justify-content: space-around;
-            width: 100%;
             padding: 10px;
         }
 
         .button {
-            background-color: #444;
+            background-color: rgba(0, 0, 0, 0.6); /* Полупрозрачные кнопки */
             color: white;
             border: none;
             padding: 15px 20px;
@@ -53,7 +54,7 @@
         }
 
         .button:hover {
-            background-color: #555;
+            background-color: rgba(0, 0, 0, 0.8); /* Тёмнее при наведении */
         }
     </style>
 </head>
@@ -62,13 +63,12 @@
 <div class="game-container">
     <!-- Кликабельная голова -->
     <img src="https://github.com/hitkrit/telegram/raw/de5cb43bc1ec1dd5c17aaf0fcc3de85ffbceeee2/hit.jpg" alt="Click to Earn">
-</div>
-
-<!-- Кнопки -->
-<div class="button-container">
-    <button class="button" onclick="alert('Задания')">Задания</button>
-    <button class="button" onclick="alert('Airdrop')">Airdrop</button>
-    <button class="button" onclick="alert('Друзья')">Друзья</button>
+    <!-- Кнопки -->
+    <div class="button-container">
+        <button class="button" onclick="alert('Задания')">Задания</button>
+        <button class="button" onclick="alert('Airdrop')">Airdrop</button>
+        <button class="button" onclick="alert('Друзья')">Друзья</button>
+    </div>
 </div>
 
 </body>
