@@ -31,26 +31,30 @@
             border-radius: 10px;
         }
 
-        .character {
-            position: absolute;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 300px;
-            background: url('path_to_mario_character_image') no-repeat center;
-            background-size: contain;
-        }
-
         .balance {
             color: white;
             font-size: 24px;
         }
 
+        .mine-btn {
+            background-color: #ff5733;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .wallet img {
+            width: 40px;
+            height: 40px;
+        }
+
         .nav {
             display: flex;
             justify-content: space-around;
-            background-color: #333;
+            background-color: #f1f1f1;
             padding: 10px;
         }
 
@@ -71,23 +75,11 @@
             color: black;
         }
 
-        .mine-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .mine-btn {
-            background-color: #ff5733;
-            color: white;
-            padding: 15px 25px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .mine-btn:hover {
-            background-color: #ff3333;
+        @media (max-width: 600px) {
+            .nav button {
+                font-size: 16px;
+                padding: 10px;
+            }
         }
 
     </style>
@@ -95,19 +87,47 @@
 <body>
     <!-- Верхняя информация с балансом -->
     <div class="top-info">
-        <div class="balance">Монет: 536 731 306</div>
-        <div class="level">Уровень: 18</div>
-        <button class="mine-btn">Mint NFT</button>
+        <div class="balance">Balance: <span id="balance">0</span> coins</div>
+        <button class="mine-btn" id="mine-btn">Mine Crypto</button>
+        <div class="wallet">
+            <img src="/mnt/data/image.png" alt="TON Wallet">
+        </div>
     </div>
-
-    <!-- Персонаж -->
-    <div class="character"></div>
 
     <!-- Навигация снизу -->
     <div class="nav">
-        <button class="active">Майнинг</button>
-        <button>Друзья</button>
-        <button>Задачи</button>
+        <button class="active">Main</button>
+        <button>Tasks</button>
+        <button>Friends</button>
+        <button>Leaderboard</button>
     </div>
+
+    <script>
+        // Баланс игрока
+        let playerBalance = 0;
+
+        // Функция для обновления баланса на экране
+        function updateBalance() {
+            document.getElementById('balance').innerText = playerBalance;
+        }
+
+        // Обработка кнопки майнинга
+        document.getElementById('mine-btn').addEventListener('click', function() {
+            const now = new Date().getTime();
+            let lastMineTime = localStorage.getItem('lastMineTime') || 0;
+            const eightHours = 8 * 60 * 60 * 1000;
+
+            if (now - lastMineTime > eightHours) {
+                playerBalance += 10; // Начисление 10 монет
+                updateBalance();
+                localStorage.setItem('lastMineTime', now);
+                alert('You mined 10 coins!');
+            } else {
+                alert('You can mine again in 8 hours.');
+            }
+        });
+
+        updateBalance();
+    </script>
 </body>
 </html>
