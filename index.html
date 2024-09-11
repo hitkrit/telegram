@@ -52,37 +52,48 @@
             font-weight: bold;
             color: #333;
         }
-        #profile {
-            top: 10%;
-            left: 10%;
+        .coin {
+            position: absolute;
+            font-size: 20px;
+            color: gold;
+            animation: fly 1s ease-out forwards;
         }
-        #wallet {
-            top: 10%;
-            right: 10%;
-        }
-        /* Остальные кнопки */
-        #friends {
-            bottom: 10%;
-            left: 10%;
-        }
-        #tasks {
-            bottom: 10%;
-            left: 30%;
-        }
-        #mining_button {
-            bottom: 10%;
-            right: 30%;
-        }
-        #airdrop {
-            bottom: 10%;
-            right: 10%;
+        @keyframes fly {
+            0% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px);
+            }
         }
     </style>
     <script>
         let coins = 0;
-        function addCoin() {
+
+        function addCoin(event) {
             coins += 1;
             document.getElementById('coin-counter').innerText = 'Монет: ' + coins;
+
+            // Создаем элемент монеты
+            const coin = document.createElement('div');
+            coin.innerText = '1';
+            coin.classList.add('coin');
+            document.body.appendChild(coin);
+
+            // Определяем позицию клика
+            const x = event.clientX;
+            const y = event.clientY;
+
+            // Устанавливаем начальную позицию монеты
+            coin.style.left = `${x}px`;
+            coin.style.top = `${y}px`;
+
+            // Удаляем монету после завершения анимации
+            setTimeout(() => {
+                coin.remove();
+            }, 1000);
         }
     </script>
 </head>
@@ -92,7 +103,7 @@
         <div id="coin-counter" class="counter">Монет: 0</div>
 
         <!-- Кликабельная голова -->
-        <div class="clickable" onclick="addCoin()">
+        <div class="clickable" onclick="addCoin(event)">
             <img src="./image.png" alt="Кликабельная голова" width="200" height="200">
         </div>
 
