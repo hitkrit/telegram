@@ -13,10 +13,13 @@
       align-items: center;
       height: 100vh;
       background-color: #f0f0f0;
+      overflow: hidden;
     }
 
     #game-container {
       position: relative;
+      width: 100vw;
+      height: 100vh;
     }
 
     #coin-counter {
@@ -33,19 +36,18 @@
     #tap-area {
       width: 100vw;
       height: 100vh;
+      background-image: url('/mnt/data/hit.jpg'); /* Link to the correct path of your image */
       background-size: cover;
       background-position: center;
-      background-image: url('/mnt/data/hit.jpg');
       position: relative;
     }
 
-    /* Adjust size and position of the head area to detect taps */
     #head {
       position: absolute;
-      width: 150px; /* Adjust this based on image dimensions */
-      height: 150px; /* Adjust this based on image dimensions */
+      width: 150px; /* Adjust the size as per your image */
+      height: 150px; /* Adjust the size as per your image */
       left: 50%;
-      top: 50%;
+      top: 45%; /* Adjust based on the head position in the image */
       transform: translate(-50%, -50%);
       cursor: pointer;
       border-radius: 50%;
@@ -57,7 +59,7 @@
   <div id="game-container">
     <div id="coin-counter">Coins: 0</div>
     <div id="tap-area">
-      <div id="head"></div> <!-- Tappable area for the head -->
+      <div id="head"></div> <!-- Clickable head area -->
     </div>
   </div>
 
