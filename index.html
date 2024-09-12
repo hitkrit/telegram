@@ -82,6 +82,18 @@
       padding: 5px 10px;
       z-index: 3;
     }
+
+    /* Счётчик общего количества монет возле My Account */
+    #total-coins-counter {
+      position: absolute;
+      top: 10px;
+      left: 150px; /* Расположен справа от My Account */
+      font-size: 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      color: #ff0000;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -99,12 +111,20 @@
       <!-- Кликая зона для головы -->
       <div id="head"></div>
     </div>
+
+    <!-- Общий счётчик заработанных монет рядом с My Account -->
+    <div id="total-coins-counter">
+      Total: <span id="total-coins-value">0</span> $MAR
+    </div>
   </div>
 
   <script>
     let coins = 0;
     const totalTaps = 1000;  // Всего нажатий
     let tapsLeft = 1000;  // Оставшиеся нажатия
+
+    // Получаем общий счётчик из localStorage, если есть
+    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
 
     // Обновление счётчика монет
     function updateCoinCounter() {
@@ -116,13 +136,23 @@
       document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
     }
 
+    // Обновление общего счётчика монет
+    function updateTotalCoinsCounter() {
+      document.getElementById('total-coins-value').innerText = totalCoins;
+    }
+
     // Обработка нажатия на голову
     document.getElementById('head').addEventListener('click', function() {
       if (tapsLeft > 0) {
         coins++;
         tapsLeft--;
+        totalCoins++;
         updateCoinCounter();
         updateTapCounter();
+        updateTotalCoinsCounter();
+
+        // Сохраняем общий счётчик монет в localStorage
+        localStorage.setItem('totalCoins', totalCoins);
       } else {
         alert("No more taps left. Wait for reset.");
       }
@@ -140,6 +170,7 @@
     // Инициализация счётчиков при загрузке
     updateCoinCounter();
     updateTapCounter();
+    updateTotalCoinsCounter();
   </script>
 </body>
 </html>
