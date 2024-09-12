@@ -51,7 +51,7 @@
     #coin-counter {
       position: absolute;
       left: 50%;
-      top: 30%; /* Позиционируем счётчик над головой */
+      top: calc(30% - 1cm); /* Поднимаем на 1 см выше */
       transform: translateX(-50%);
       font-size: 36px;
       font-weight: bold;
@@ -68,7 +68,7 @@
 <body>
   <div id="game-container">
     <!-- Счётчик монет -->
-    <div id="coin-counter">Coins: 0</div>
+    <div id="coin-counter">0 $MAR</div>
 
     <!-- Фоновая картинка -->
     <div id="tap-area">
@@ -82,7 +82,7 @@
 
     // Обновление счётчика монет
     function updateCounter() {
-      document.getElementById('coin-counter').innerText = 'Coins: ' + coins;
+      document.getElementById('coin-counter').innerText = coins + ' $MAR';
     }
 
     // Событие нажатия на голову
