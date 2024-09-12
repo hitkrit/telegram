@@ -30,6 +30,7 @@
       background-repeat: no-repeat;
       background-position: center;
       position: relative;
+      z-index: 1;
     }
 
     /* Область кликабельной головы */
@@ -43,13 +44,14 @@
       cursor: pointer;
       border-radius: 50%;
       border: 2px solid rgba(255, 255, 255, 0);
+      z-index: 2;
     }
 
     /* Счётчик монет */
     #coin-counter {
       position: absolute;
       left: 50%;
-      top: 35%; /* Позиционируем счётчик над головой */
+      top: 30%; /* Позиционируем счётчик над головой */
       transform: translateX(-50%);
       font-size: 36px;
       font-weight: bold;
@@ -59,6 +61,7 @@
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
       padding: 10px;
+      z-index: 3; /* Счётчик выше всех слоёв */
     }
   </style>
 </head>
