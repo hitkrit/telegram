@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TON Wallet Integration</title>
+  <title>Coin Miner</title>
   <style>
     body, html {
       margin: 0;
@@ -25,58 +25,68 @@
     #tap-area {
       width: 100vw;
       height: 100vh;
-      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png'); /* Картинка */
-      background-size: contain;
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png'); /* Фоновая картинка */
+      background-size: contain; /* Уменьшаем картинку, чтобы она вписывалась в рамки */
       background-repeat: no-repeat;
       background-position: center;
       position: relative;
     }
 
-    /* Иконка кошелька в правом верхнем углу */
-    #wallet-icon-container {
+    /* Область кликабельной головы */
+    #head {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      width: 150px;
+      height: 150px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      border-radius: 50%; /* Закругление области клика */
+      border: 2px solid rgba(255, 255, 255, 0); /* Невидимая граница */
     }
 
-    #wallet-icon {
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
+    /* Счётчик монет */
+    #coin-counter {
+      position: absolute;
+      left: 50%;
+      top: 40%; /* Счётчик над головой */
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      color: #ff9800;
+      background: linear-gradient(45deg, #ff9800, #ff5722);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 10px;
     }
   </style>
 </head>
 <body>
   <div id="game-container">
-    <div id="tap-area"></div> <!-- Фоновая картинка -->
+    <!-- Счётчик монет -->
+    <div id="coin-counter">Coins: 0</div>
 
-    <!-- Иконка кошелька в верхнем правом углу -->
-    <div id="wallet-icon-container">
-      <img id="wallet-icon" src="https://example.com/wallet.png" alt="Wallet">
+    <!-- Фоновая картинка -->
+    <div id="tap-area">
+      <!-- Кликая зона для головы -->
+      <div id="head"></div>
     </div>
   </div>
 
-  <!-- Подключаем Ton Connect SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest"></script>
-
   <script>
-    // Подключаемся к TON Connect
-    const tonConnect = new TonConnect();
+    let coins = 0;
 
-    // Обработчик нажатия на кошелек
-    document.getElementById('wallet-icon').addEventListener('click', async function() {
-      try {
-        // Пытаемся подключиться к кошельку TON
-        await tonConnect.connectWallet();
+    // Обновление счётчика монет
+    function updateCounter() {
+      document.getElementById('coin-counter').innerText = 'Coins: ' + coins;
+    }
 
-        // Получаем адрес пользователя
-        const userAddress = tonConnect.connectedWallet.account.address;
-
-        alert('Кошелек подключен: ' + userAddress);
-      } catch (error) {
-        alert('Ошибка подключения к кошельку TON');
-        console.error(error);
-      }
+    // Событие нажатия на голову
+    document.getElementById('head').addEventListener('click', function() {
+      coins++;
+      updateCounter();
     });
   </script>
 </body>
