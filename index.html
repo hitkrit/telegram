@@ -26,7 +26,7 @@
       width: 100vw;
       height: 100vh;
       background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png'); /* Фоновая картинка */
-      background-size: contain; /* Уменьшаем картинку, чтобы она вписывалась в рамки */
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       position: relative;
@@ -41,21 +41,20 @@
       top: 50%;
       transform: translate(-50%, -50%);
       cursor: pointer;
-      border-radius: 50%; /* Закругление области клика */
-      border: 2px solid rgba(255, 255, 255, 0); /* Невидимая граница */
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0);
     }
 
     /* Счётчик монет */
     #coin-counter {
       position: absolute;
       left: 50%;
-      top: 40%; /* Счётчик над головой */
+      top: 35%; /* Позиционируем счётчик над головой */
       transform: translateX(-50%);
       font-size: 36px;
       font-weight: bold;
       font-family: 'Poppins', sans-serif;
-      color: #ff9800;
-      background: linear-gradient(45deg, #ff9800, #ff5722);
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
