@@ -60,23 +60,22 @@
       border: 2px solid rgba(255, 255, 255, 0);
     }
 
-    /* Иконка и счётчик в левом верхнем углу */
-    #wallet-info {
+    /* Блок с новой картинкой и счётчиком монет в левом верхнем углу */
+    #image-info {
       position: absolute;
       top: 10px;
       left: 10px;
       display: flex;
       align-items: center;
       gap: 10px;
-      background-color: rgba(255, 255, 255, 0.7); /* Полупрозрачный фон в тон с основной картинкой */
+      background-color: rgba(255, 255, 255, 0.7); /* Полупрозрачный фон */
       padding: 5px 10px;
       border-radius: 12px;
     }
 
-    #wallet-icon {
+    #left-icon {
       width: 50px;
       height: 50px;
-      cursor: pointer;
     }
 
     #total-coins {
@@ -88,6 +87,22 @@
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Тень для красоты */
     }
+
+    /* Иконка кошелька в правом верхнем углу */
+    #wallet-icon-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(255, 255, 255, 0.7); /* Полупрозрачный фон */
+      padding: 5px;
+      border-radius: 12px;
+    }
+
+    #wallet-icon {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -97,10 +112,15 @@
       <div id="head"></div> <!-- Кликая зона для головы -->
     </div>
 
-    <!-- Иконка и счётчик заработанных монет -->
-    <div id="wallet-info">
+    <!-- Новая картинка и счётчик монет в левом верхнем углу -->
+    <div id="image-info">
+      <img id="left-icon" src="https://raw.githubusercontent.com/hitkrit/telegram/d56c292f983aca723fcb1c0e510b07c77dfacc95/3.png" alt="New Icon">
+      <div id="total-coins">0</div> <!-- Счёт монет -->
+    </div>
+
+    <!-- Иконка кошелька в правом верхнем углу -->
+    <div id="wallet-icon-container">
       <img id="wallet-icon" src="https://raw.githubusercontent.com/hitkrit/telegram/b7dc0417186b53d94677e69ddc564c8d1e308841/2.png" alt="TON Wallet Icon">
-      <div id="total-coins">0</div> <!-- Счёт монет без надписи Total Coins -->
     </div>
   </div>
 
