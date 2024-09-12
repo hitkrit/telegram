@@ -87,7 +87,7 @@
     <div id="coin-counter">0 $MAR</div>
 
     <!-- Счётчик оставшихся нажатий -->
-    <div id="tap-counter">1000 taps left</div>
+    <div id="tap-counter">1000 / 1000</div>
 
     <!-- Фоновая картинка -->
     <div id="tap-area">
@@ -98,7 +98,8 @@
 
   <script>
     let coins = 0;
-    let tapsLeft = 1000;
+    const totalTaps = 1000;  // Всего нажатий
+    let tapsLeft = 1000;  // Оставшиеся нажатия
 
     // Обновление счётчика монет
     function updateCoinCounter() {
@@ -107,7 +108,7 @@
 
     // Обновление счётчика оставшихся нажатий
     function updateTapCounter() {
-      document.getElementById('tap-counter').innerText = tapsLeft + ' taps left';
+      document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
     }
 
     // Обработка нажатия на голову
@@ -124,7 +125,7 @@
 
     // Восстановление нажатий каждые 3 часа
     function resetTaps() {
-      tapsLeft = 1000;
+      tapsLeft = totalTaps;
       updateTapCounter();
     }
 
