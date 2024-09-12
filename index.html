@@ -67,14 +67,16 @@
     /* Счётчик оставшихся нажатий */
     #tap-counter {
       position: absolute;
-      left: calc(50% - 2cm); /* На 2 см влево от центра */
-      top: calc(50% + 1cm); /* На 1 см вниз от головы */
+      left: calc(50% - 5cm); /* На 3 см влево */
+      top: calc(50% + 4cm); /* На 3 см вниз */
       font-size: 24px;
+      font-weight: bold;
       font-family: 'Poppins', sans-serif;
-      color: #333;
-      background-color: rgba(255, 255, 255, 0.7);
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
       padding: 5px 10px;
-      border-radius: 10px;
       z-index: 3;
     }
   </style>
