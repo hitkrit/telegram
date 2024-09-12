@@ -60,14 +60,30 @@
       border: 2px solid rgba(255, 255, 255, 0);
     }
 
-    /* Иконка кошелька в правом верхнем углу */
-    #wallet-icon {
+    /* Иконка и счётчик в левом верхнем углу */
+    #wallet-info {
       position: absolute;
       top: 10px;
-      right: 10px;
+      left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #wallet-icon {
       width: 50px;
       height: 50px;
       cursor: pointer;
+    }
+
+    #total-coins {
+      font-size: 24px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff9800, #ff5722); /* Градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Тень для красоты */
     }
   </style>
 </head>
@@ -77,8 +93,12 @@
     <div id="tap-area">
       <div id="head"></div> <!-- Кликая зона для головы -->
     </div>
-    <!-- Иконка кошелька -->
-    <img id="wallet-icon" src="https://raw.githubusercontent.com/hitkrit/telegram/400bf98b2b08263166783ef6ab9c91c5324f7585/1.gpj.jfif" alt="TON Wallet Icon">
+
+    <!-- Иконка и счётчик заработанных монет -->
+    <div id="wallet-info">
+      <img id="wallet-icon" src="https://raw.githubusercontent.com/hitkrit/telegram/b7dc0417186b53d94677e69ddc564c8d1e308841/2.png" alt="TON Wallet Icon">
+      <div id="total-coins">Total Coins: 0</div> <!-- Общий счёт монет -->
+    </div>
   </div>
 
   <script>
@@ -87,6 +107,7 @@
     // Функция для обновления счётчика монет
     function updateCounter() {
       document.getElementById('coin-counter').innerText = 'Coins: ' + coins;
+      document.getElementById('total-coins').innerText = 'Total Coins: ' + coins;
     }
 
     // Обработка нажатия на голову
@@ -95,9 +116,8 @@
       updateCounter();
     });
 
-    // Обработка нажатия на иконку кошелька
+    // Обработка нажатия на иконку кошелька (может быть изменена под реальные функции)
     document.getElementById('wallet-icon').addEventListener('click', function() {
-      // Имитация подключения к кошельку TON (реальная интеграция требует API)
       alert('Подключение к TON кошельку...');
     });
   </script>
