@@ -27,62 +27,99 @@
     #tap-area {
       width: 100vw;
       height: 100vh;
-      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/5b1374b220055e17eb0a1a7886b5f3b000bb7ece/maine.png'); /* Новая картинка */
-      background-size: contain; /* Картинка будет уменьшена для отображения всех элементов */
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/5b1374b220055e17eb0a1a7886b5f3b000bb7ece/maine.png'); /* Картинка */
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       position: relative;
     }
 
-    #head {
+    /* Грибок My Account в левом верхнем углу */
+    #my-account {
       position: absolute;
-      width: 15%; /* Размер кликабельной области */
-      height: 15%;
-      left: 50%;
-      top: 45%; /* Регулируем для правильного положения */
-      transform: translate(-50%, -50%);
-      cursor: pointer;
-      border-radius: 50%; /* Закругление для области клика */
-      border: 2px solid rgba(255, 255, 255, 0);
+      top: 10px;
+      left: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    #coin-counter {
+    #my-account img {
+      width: 50px;
+      height: 50px;
+    }
+
+    /* Иконка кошелька в правом верхнем углу */
+    #wallet-icon-container {
       position: absolute;
-      left: 50%;
-      top: 10%; /* Позиционирование над головой */
-      transform: translateX(-50%);
-      font-size: 36px;
-      font-weight: bold;
+      top: 10px;
+      right: 10px;
+    }
+
+    #wallet-icon {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
+
+    /* Грибочки и надписи внизу экрана */
+    #menu {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    #menu img {
+      width: 50px;
+      height: 50px;
+    }
+
+    #menu div {
+      text-align: center;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(45deg, #ff9800, #ff5722);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      padding: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      font-weight: bold;
+      color: #ff5722;
     }
   </style>
 </head>
 <body>
   <div id="game-container">
-    <div id="coin-counter">Coins: 0</div> <!-- Счётчик монет -->
-    <div id="tap-area">
-      <div id="head"></div> <!-- Кликая зона для головы -->
+    <div id="tap-area"></div> <!-- Фоновая картинка -->
+
+    <!-- Грибок "My Account" в верхнем левом углу -->
+    <div id="my-account">
+      <img src="https://example.com/myaccount.png" alt="My Account">
+      <div>MY ACCOUNT</div>
+    </div>
+
+    <!-- Иконка кошелька в верхнем правом углу -->
+    <div id="wallet-icon-container">
+      <img id="wallet-icon" src="https://example.com/wallet.png" alt="Wallet">
+    </div>
+
+    <!-- Грибочки и надписи внизу экрана -->
+    <div id="menu">
+      <div>
+        <img src="https://example.com/maine.png" alt="MAINE">
+        <div>MAINE</div>
+      </div>
+      <div>
+        <img src="https://example.com/task.png" alt="TASK">
+        <div>TASK</div>
+      </div>
+      <div>
+        <img src="https://example.com/friends.png" alt="FRIENDS">
+        <div>FRIENDS</div>
+      </div>
+      <div>
+        <img src="https://example.com/airdrop.png" alt="AIRDROP">
+        <div>AIRDROP</div>
+      </div>
     </div>
   </div>
-
-  <script>
-    let coins = 0;
-
-    // Функция для обновления счётчика монет
-    function updateCounter() {
-      document.getElementById('coin-counter').innerText = 'Coins: ' + coins;
-    }
-
-    // Обработка нажатия на голову
-    document.getElementById('head').addEventListener('click', function() {
-      coins++;
-      updateCounter();
-    });
-  </script>
 </body>
 </html>
