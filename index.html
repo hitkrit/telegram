@@ -1,109 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Tap Game</title>
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-        #game-container {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: url('/mnt/data/A_colorful,_cartoonish_game_scene_with_a_fun,_anim.png') no-repeat center center;
-            background-size: cover;
-        }
-        .balance {
-            position: fixed;
-            top: 10px;
-            left: 20px;
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Miner</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    #game-container {
+      position: relative;
+    }
+
+    #coin-counter {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      color: #000;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 10px;
+      border-radius: 10px;
+    }
+
+    #tap-area {
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+      background-image: url('/mnt/data/hit.jpg');
+      position: relative;
+    }
+
+    /* Adjust size and position of the head area to detect taps */
+    #head {
+      position: absolute;
+      width: 150px; /* Adjust this based on image dimensions */
+      height: 150px; /* Adjust this based on image dimensions */
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0);
+    }
+  </style>
 </head>
 <body>
+  <div id="game-container">
+    <div id="coin-counter">Coins: 0</div>
+    <div id="tap-area">
+      <div id="head"></div> <!-- Tappable area for the head -->
+    </div>
+  </div>
 
-    <div class="balance">Баланс: <span id="balance">0</span> монет</div>
-    <div id="game-container"></div>
+  <script>
+    let coins = 0;
 
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
-    <script>
-        let config = {
-            type: Phaser.AUTO,
-            width: window.innerWidth,
-            height: window.innerHeight,
-            parent: 'game-container',
-            physics: {
-                default: 'arcade',
-                arcade: {
-                    gravity: { y: 0 }
-                }
-            },
-            scene: {
-                preload: preload,
-                create: create,
-                update: update
-            }
-        };
+    // Update coin counter
+    function updateCounter() {
+      document.getElementById('coin-counter').innerText = 'Coins: ' + coins;
+    }
 
-        let game = new Phaser.Game(config);
-        let balance = 0;
-        let canMine = true;
-        let miningCooldown = 2000; // 2 seconds cooldown
-        let lastMiningTime = 0;
-        let miningObject;
-        let balanceText;
-
-        function preload() {
-            this.load.image('coin', 'https://cdn-icons-png.flaticon.com/512/138/138292.png'); // Заменим на монетку
-            this.load.image('background', '/mnt/data/A_colorful,_cartoonish_game_scene_with_a_fun,_anim.png');
-        }
-
-        function create() {
-            // Фон
-            this.add.image(window.innerWidth / 2, window.innerHeight / 2, 'background').setDisplaySize(window.innerWidth, window.innerHeight);
-
-            // Объект для майнинга
-            miningObject = this.physics.add.sprite(window.innerWidth / 2, window.innerHeight / 2, 'coin').setInteractive();
-            miningObject.setScale(0.3); // Уменьшим размер объекта
-
-            balanceText = document.getElementById('balance');
-
-            // Анимация при нажатии на объект
-            miningObject.on('pointerdown', function (pointer) {
-                if (canMine && Date.now() - lastMiningTime > miningCooldown) {
-                    balance += 10; // Добавляем 10 монет
-                    lastMiningTime = Date.now();
-                    balanceText.innerText = balance;
-
-                    // Анимация увеличения объекта
-                    miningObject.setScale(0.35);
-                    this.tweens.add({
-                        targets: miningObject,
-                        scale: 0.3,
-                        ease: 'Power1',
-                        duration: 200
-                    });
-                }
-            }, this);
-        }
-
-        function update() {
-            // Обновляем игру каждый кадр, если нужно добавить логику
-        }
-    </script>
-
+    // Handle head tap
+    document.getElementById('head').addEventListener('click', function() {
+      coins++;
+      updateCounter();
+    });
+  </script>
 </body>
 </html>
