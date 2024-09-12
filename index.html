@@ -28,7 +28,7 @@
       width: 100vw;
       height: 100vh;
       background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/5b1374b220055e17eb0a1a7886b5f3b000bb7ece/maine.png'); /* Новая картинка */
-      background-size: cover; /* Картинка будет на весь экран */
+      background-size: contain; /* Картинка будет уменьшена для отображения всех элементов */
       background-repeat: no-repeat;
       background-position: center;
       position: relative;
@@ -36,10 +36,10 @@
 
     #head {
       position: absolute;
-      width: 20%; /* Размер кликабельной области */
-      height: 20%;
+      width: 15%; /* Размер кликабельной области */
+      height: 15%;
       left: 50%;
-      top: 40%; /* Регулируем для правильного положения */
+      top: 45%; /* Регулируем для правильного положения */
       transform: translate(-50%, -50%);
       cursor: pointer;
       border-radius: 50%; /* Закругление для области клика */
