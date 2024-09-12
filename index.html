@@ -68,6 +68,9 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      background-color: rgba(255, 255, 255, 0.7); /* Полупрозрачный фон в тон с основной картинкой */
+      padding: 5px 10px;
+      border-radius: 12px;
     }
 
     #wallet-icon {
@@ -97,7 +100,7 @@
     <!-- Иконка и счётчик заработанных монет -->
     <div id="wallet-info">
       <img id="wallet-icon" src="https://raw.githubusercontent.com/hitkrit/telegram/b7dc0417186b53d94677e69ddc564c8d1e308841/2.png" alt="TON Wallet Icon">
-      <div id="total-coins">Total Coins: 0</div> <!-- Общий счёт монет -->
+      <div id="total-coins">0</div> <!-- Счёт монет без надписи Total Coins -->
     </div>
   </div>
 
@@ -107,7 +110,7 @@
     // Функция для обновления счётчика монет
     function updateCounter() {
       document.getElementById('coin-counter').innerText = 'Coins: ' + coins;
-      document.getElementById('total-coins').innerText = 'Total Coins: ' + coins;
+      document.getElementById('total-coins').innerText = coins;
     }
 
     // Обработка нажатия на голову
