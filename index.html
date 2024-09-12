@@ -47,7 +47,7 @@
       z-index: 2;
     }
 
-    /* Счётчик монет */
+    /* Счётчик монет и $MAR */
     #coin-counter {
       position: absolute;
       left: 50%;
@@ -56,12 +56,15 @@
       font-size: 36px;
       font-weight: bold;
       font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
       padding: 10px;
-      z-index: 3; /* Счётчик выше всех слоёв */
+      z-index: 3;
     }
 
     /* Счётчик оставшихся нажатий */
@@ -84,7 +87,9 @@
 <body>
   <div id="game-container">
     <!-- Счётчик монет -->
-    <div id="coin-counter">0 $MAR</div>
+    <div id="coin-counter">
+      <span id="coin-value">0</span>&nbsp;<span>$MAR</span>
+    </div>
 
     <!-- Счётчик оставшихся нажатий -->
     <div id="tap-counter">1000 / 1000</div>
@@ -103,7 +108,7 @@
 
     // Обновление счётчика монет
     function updateCoinCounter() {
-      document.getElementById('coin-counter').innerText = coins + ' $MAR';
+      document.getElementById('coin-value').innerText = coins;
     }
 
     // Обновление счётчика оставшихся нажатий
