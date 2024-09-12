@@ -87,13 +87,15 @@
     #total-coins-counter {
       position: absolute;
       top: 20px; /* Увеличиваем отступ сверху */
-      left: 180px; /* Увеличиваем отступ справа от My Account */
-      font-size: 24px;
+      left: calc(180px - 3cm); /* Сдвигаем на 3 см влево */
+      font-size: 18px; /* Уменьшенный размер шрифта */
       font-family: 'Poppins', sans-serif;
       font-weight: bold;
-      color: #ff0000;
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
-      z-index: 4; /* Более высокий z-index для отображения поверх всех элементов */
+      z-index: 4;
     }
   </style>
 </head>
@@ -115,7 +117,7 @@
 
     <!-- Общий счётчик заработанных монет рядом с My Account -->
     <div id="total-coins-counter">
-      Total: <span id="total-coins-value">0</span> $MAR
+      <span id="total-coins-value">0</span> $MAR
     </div>
   </div>
 
