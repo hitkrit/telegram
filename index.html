@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coin Miner</title>
+  <title>TON Wallet Integration</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap'); /* Импортируем шрифт */
-
     body, html {
       margin: 0;
       padding: 0;
@@ -28,17 +26,58 @@
       width: 100vw;
       height: 100vh;
       background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png'); /* Картинка */
-      background-size: contain; /* Уменьшаем картинку, чтобы она вписывалась в рамки */
+      background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
       position: relative;
     }
 
+    /* Иконка кошелька в правом верхнем углу */
+    #wallet-icon-container {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    #wallet-icon {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div id="game-container">
     <div id="tap-area"></div> <!-- Фоновая картинка -->
+
+    <!-- Иконка кошелька в верхнем правом углу -->
+    <div id="wallet-icon-container">
+      <img id="wallet-icon" src="https://example.com/wallet.png" alt="Wallet">
+    </div>
   </div>
+
+  <!-- Подключаем Ton Connect SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest"></script>
+
+  <script>
+    // Подключаемся к TON Connect
+    const tonConnect = new TonConnect();
+
+    // Обработчик нажатия на кошелек
+    document.getElementById('wallet-icon').addEventListener('click', async function() {
+      try {
+        // Пытаемся подключиться к кошельку TON
+        await tonConnect.connectWallet();
+
+        // Получаем адрес пользователя
+        const userAddress = tonConnect.connectedWallet.account.address;
+
+        alert('Кошелек подключен: ' + userAddress);
+      } catch (error) {
+        alert('Ошибка подключения к кошельку TON');
+        console.error(error);
+      }
+    });
+  </script>
 </body>
 </html>
