@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Coin Miner</title>
+  <title>Coin Miner with TON Wallet</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap'); /* Импортируем красивый шрифт */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap'); /* Импортируем шрифт */
 
     body, html {
       margin: 0;
@@ -27,22 +27,22 @@
     #coin-counter {
       position: absolute;
       left: 50%;
-      top: 25%; /* Намного выше головы */
+      top: 25%; /* Позиционирование над головой */
       transform: translateX(-50%);
-      font-size: 36px; /* Увеличиваем размер текста */
+      font-size: 36px;
       font-weight: bold;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(45deg, #ff9800, #ff5722); /* Красивая градиентная заливка */
+      background: linear-gradient(45deg, #ff9800, #ff5722);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       padding: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Добавляем тень для красоты */
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     }
 
     #tap-area {
       width: 100vw;
       height: 100vh;
-      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/e396bb3fd8a5bb4fde22f3e4b8d1d5a74273e8ca/hit.jpg');
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/e396bb3fd8a5bb4fde22f3e4b8d1d5a74273e8ca/hit.jpg'); /* Картинка персонажа */
       background-size: cover;
       background-position: center;
       position: relative;
@@ -50,7 +50,7 @@
 
     #head {
       position: absolute;
-      width: 150px; /* Подогнать размер под картинку */
+      width: 150px;
       height: 150px;
       left: 50%;
       top: 50%;
@@ -58,6 +58,16 @@
       cursor: pointer;
       border-radius: 50%;
       border: 2px solid rgba(255, 255, 255, 0);
+    }
+
+    /* Иконка кошелька в правом верхнем углу */
+    #wallet-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -67,6 +77,8 @@
     <div id="tap-area">
       <div id="head"></div> <!-- Кликая зона для головы -->
     </div>
+    <!-- Иконка кошелька -->
+    <img id="wallet-icon" src="1.jpg.jfif" alt="TON Wallet Icon">
   </div>
 
   <script>
@@ -81,6 +93,12 @@
     document.getElementById('head').addEventListener('click', function() {
       coins++;
       updateCounter();
+    });
+
+    // Обработка нажатия на иконку кошелька
+    document.getElementById('wallet-icon').addEventListener('click', function() {
+      // Имитация подключения к кошельку TON (реальная интеграция требует API)
+      alert('Подключение к TON кошельку...');
     });
   </script>
 </body>
