@@ -101,23 +101,34 @@
     /* Невидимая кнопка поверх грибка AIRDROP */
     #airdrop-button {
       position: absolute;
-      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
-      right: 45px; /* Позиционируем грибок на картинке */
-      width: 90px; /* Примерный размер кнопки */
-      height: 90px; /* Примерный размер кнопки */
+      bottom: 15px;
+      right: 45px;
+      width: 80px;
+      height: 80px;
       cursor: pointer;
-      z-index: 5; /* Поверх фоновой картинки */
+      z-index: 5;
     }
 
-    /* Невидимая кнопка поверх грибка FRIENDS */
+    /* Невидимая кнопка поверх грибка FRIENDS (уменьшена) */
     #friends-button {
       position: absolute;
-      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
-      right: 150px; /* Позиционируем грибок на картинке */
-      width: 90px; /* Примерный размер кнопки */
-      height: 90px; /* Примерный размер кнопки */
+      bottom: 15px;
+      right: 140px;
+      width: 70px;
+      height: 70px;
       cursor: pointer;
-      z-index: 5; /* Поверх фоновой картинки */
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка поверх грибка TASKS */
+    #tasks-button {
+      position: absolute;
+      bottom: 15px;
+      right: 240px;
+      width: 90px;
+      height: 90px;
+      cursor: pointer;
+      z-index: 5;
     }
   </style>
 </head>
@@ -147,6 +158,9 @@
 
     <!-- Невидимая кнопка FRIENDS -->
     <div id="friends-button" onclick="openFriendsPage()"></div>
+
+    <!-- Невидимая кнопка TASKS -->
+    <div id="tasks-button" onclick="openTasksPage()"></div>
   </div>
 
   <script>
@@ -205,12 +219,17 @@
 
     // Открытие страницы Airdrop
     function openAirdropPage() {
-      window.location.href = "https://hitkrit.github.io/telegram/airdrop.html"; // Переход на страницу Airdrop
+      window.location.href = "https://hitkrit.github.io/telegram/airdrop.html";
     }
 
     // Открытие страницы Friends
     function openFriendsPage() {
-      window.location.href = "https://hitkrit.github.io/telegram/friends.html"; // Переход на страницу Friends
+      window.location.href = "https://github.com/hitkrit/telegram/blob/1913ea5fd4c996d0929702b225ff82efc4ea3359/friends.html"; // Ссылка на страницу Friends
+    }
+
+    // Открытие страницы Tasks
+    function openTasksPage() {
+      window.location.href = "https://hitkrit.github.io/telegram/tasks.html"; // Страница заданий
     }
   </script>
 
