@@ -202,6 +202,9 @@
     <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
   </div>
 
+  <!-- Подключаем TON Connect SDK -->
+  <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
+
   <script>
     let coins = 0;
     const totalTaps = 1000;
@@ -245,9 +248,21 @@
     updateTotalCoinsCounter();
 
     // Подключение к кошельку TON
-    function connectToTONWallet() {
-      alert("Подключение к кошельку TON...");
-      // Здесь добавьте функционал для подключения к TON
+    async function connectToTONWallet() {
+      const tonConnect = new TonConnect(); // Инициализация TonConnect SDK
+
+      // Проверяем, подключен ли уже кошелек
+      if (!tonConnect.wallet) {
+        // Показываем QR-код или открываем мобильное приложение для подключения кошелька
+        await tonConnect.connectWallet();
+
+        // Получаем адрес кошелька
+        const walletAddress = tonConnect.wallet.account.address;
+        console.log('Connected to wallet:', walletAddress);
+        alert('Кошелек успешно подключен: ' + walletAddress);
+      } else {
+        alert('Кошелек уже подключен');
+      }
     }
 
     // Открытие страницы Airdrop
