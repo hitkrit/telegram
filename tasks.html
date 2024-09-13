@@ -4,9 +4,82 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tasks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff5733;
+    }
+
+    .task {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+
+    .task button {
+      margin-top: 10px;
+    }
+
+    .completed {
+      color: green;
+    }
+  </style>
 </head>
 <body>
-  <h1>Tasks Page</h1>
-  <p>This is the Tasks page.</p>
+
+  <h1>Complete Tasks to Earn $MAR</h1>
+
+  <!-- Список заданий -->
+  <div id="task-list">
+    <!-- Задание 1 -->
+    <div class="task" data-task-id="1">
+      <h2>Follow on Telegram</h2>
+      <p>Follow our Telegram channel to receive updates.</p>
+      <button onclick="completeTask(1, 'https://t.me/example')">Complete Task</button>
+    </div>
+
+    <!-- Задание 2 -->
+    <div class="task" data-task-id="2">
+      <h2>Subscribe on YouTube</h2>
+      <p>Subscribe to our YouTube channel for new videos.</p>
+      <button onclick="completeTask(2, 'https://youtube.com/example')">Complete Task</button>
+    </div>
+
+    <!-- Задание 3 -->
+    <div class="task" data-task-id="3">
+      <h2>Follow on Twitter</h2>
+      <p>Follow us on Twitter to stay updated.</p>
+      <button onclick="completeTask(3, 'https://twitter.com/example')">Complete Task</button>
+    </div>
+  </div>
+
+  <script>
+    const completedTasks = localStorage.getItem('completedTasks') ? JSON.parse(localStorage.getItem('completedTasks')) : [];
+
+    // Отмечаем выполненные задания
+    function renderTasks() {
+      completedTasks.forEach(taskId => {
+        const taskElement = document.querySelector(`.task[data-task-id="${taskId}"]`);
+        taskElement.innerHTML = `<h2>Task Completed</h2><p class="completed">You earned 500 $MAR for completing this task.</p>`;
+      });
+    }
+
+    // Завершение задания
+    function completeTask(taskId, url) {
+      window.open(url, '_blank');
+      completedTasks.push(taskId);
+      localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+      renderTasks();
+    }
+
+    renderTasks();
+  </script>
+
 </body>
 </html>
