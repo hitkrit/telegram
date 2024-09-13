@@ -202,8 +202,8 @@
     <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
   </div>
 
-  <!-- Подключаем TON Connect SDK -->
-  <script src="https://unpkg.com/@tonconnect/sdk@latest"></script>
+  <!-- Подключаем библиотеку TON Connect с использованием CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/sdk.min.js"></script>
 
   <script>
     let coins = 0;
@@ -250,14 +250,12 @@
     // Подключение к кошельку TON
     async function connectToTONWallet() {
       try {
-        console.log('Initializing TonConnect...');
+        console.log('Инициализация TonConnect...');
         const tonConnect = new TonConnect(); // Инициализация TonConnect SDK
-
-        console.log('TonConnect initialized:', tonConnect);
 
         // Проверяем, подключен ли уже кошелек
         if (!tonConnect.wallet) {
-          console.log('No wallet connected. Initiating connection...');
+          console.log('Подключаем кошелек...');
           // Показываем QR-код или открываем мобильное приложение для подключения кошелька
           await tonConnect.connectWallet();
 
@@ -266,12 +264,11 @@
           console.log('Connected to wallet:', walletAddress);
           alert('Кошелек успешно подключен: ' + walletAddress);
         } else {
-          console.log('Wallet is already connected:', tonConnect.wallet);
           alert('Кошелек уже подключен');
         }
       } catch (error) {
-        console.error('Error connecting to wallet:', error);
-        alert('Ошибка подключения к кошельку: ' + error.message);
+        console.error('Ошибка при подключении к кошельку TON:', error);
+        alert('Не удалось подключить кошелек. Проверьте настройки и попробуйте снова.');
       }
     }
 
