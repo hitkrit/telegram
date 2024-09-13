@@ -1,7 +1,6 @@
 {
-  "url": "https://telegram-kappa-blond.vercel.app", 
-  "name": "Telegram Bot", 
-  "iconUrl": "https://telegram-kappa-blond.vercel.app/icon.png", 
-  "termsOfUseUrl": "https://telegram-kappa-blond.vercel.app/terms", 
-  "privacyPolicyUrl": "https://telegram-kappa-blond.vercel.app/privacy"
+  "url": "https://telegram-kappa-blond.vercel.app",
+  "name": "Telegram Bot",
+  "termsOfUseUrl": "https://github.com/hitkrit/telegram/blob/cda270b75f5341d768e4796d4ad14c40ae815bc0/terms.html",
+  "privacyPolicyUrl": "https://github.com/hitkrit/telegram/blob/cda270b75f5341d768e4796d4ad14c40ae815bc0/privacy.html"
 }
