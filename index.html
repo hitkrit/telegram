@@ -98,13 +98,15 @@
       z-index: 4;
     }
 
-    /* Грибок AIRDROP */
-    #airdrop {
+    /* Невидимая кнопка поверх грибка AIRDROP */
+    #airdrop-button {
       position: absolute;
-      bottom: 10px;
-      right: 10px;
-      width: 100px;
+      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
+      right: 45px; /* Позиционируем грибок на картинке */
+      width: 90px; /* Примерный размер кнопки */
+      height: 90px; /* Примерный размер кнопки */
       cursor: pointer;
+      z-index: 5; /* Поверх фоновой картинки */
     }
   </style>
 </head>
@@ -129,11 +131,8 @@
       <span id="total-coins-value">0</span> $MAR
     </div>
 
-    <!-- Грибок AIRDROP -->
-    <div id="airdrop" onclick="openAirdropPage()">
-      <img src="https://example.com/airdrop-icon.png" alt="AIRDROP">
-      <div>AIRDROP</div>
-    </div>
+    <!-- Невидимая кнопка AIRDROP -->
+    <div id="airdrop-button" onclick="openAirdropPage()"></div>
   </div>
 
   <script>
