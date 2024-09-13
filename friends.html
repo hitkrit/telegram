@@ -32,6 +32,17 @@
       border-radius: 5px;
       background-color: #f9f9f9;
     }
+
+    /* Стиль для кнопки возврата */
+    .back-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -47,6 +58,9 @@
   <div class="friend-list" id="friend-list">
     <div class="friend">No friends invited yet.</div>
   </div>
+
+  <!-- Кнопка возврата на главную -->
+  <button class="back-button" onclick="goBack()">Return to Main Screen</button>
 
   <script>
     const referralLink = document.getElementById('referral-link');
@@ -86,6 +100,11 @@
     inviteFriend('John Doe'); // Вызываем эту функцию при каждом новом приглашении друга
 
     renderFriends();
+
+    // Функция возврата на главную страницу
+    function goBack() {
+      window.location.href = 'https://hitkrit.github.io/telegram/'; // Замените ссылку на главную страницу
+    }
   </script>
 
 </body>
