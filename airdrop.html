@@ -9,9 +9,9 @@
       margin: 0;
       padding: 0;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
       height: 100vh;
       background-color: #f0f0f0;
       font-family: 'Poppins', sans-serif;
@@ -46,55 +46,58 @@
     button:hover {
       background-color: #ff0000;
     }
+
+    /* Кнопка возврата */
+    .back-button {
+      position: absolute;
+      bottom: 20px; /* Кнопка находится внизу экрана */
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .back-button:hover {
+      background-color: #ff0000;
+    }
   </style>
 </head>
 <body>
 
   <h1>AIRDROP</h1>
 
-  <!-- Задание 1: Подключение криптовалютного кошелька -->
+  <!-- Пример задания для airdrop -->
   <div class="task">
     <p>Подключите ваш криптовалютный кошелек для участия в airdrop.</p>
     <button onclick="connectWallet()">Подключить кошелек</button>
   </div>
 
-  <!-- Задание 2: Транзакция 0.3 TON -->
+  <!-- Ещё одно задание -->
   <div class="task">
     <p>Сделайте транзакцию для завершения задания.</p>
     <button onclick="makeTransaction()">Сделать транзакцию</button>
   </div>
 
-  <!-- Подключение библиотеки Ton Connect -->
-  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest"></script>
+  <!-- Кнопка возврата на главный экран -->
+  <button class="back-button" onclick="goBack()">Вернуться на главный экран</button>
 
   <script>
-    const tonConnect = new TonConnect();
-
-    // Подключение кошелька
-    function connectWallet() {
-      tonConnect.connectWallet()
-        .then(() => {
-          alert("Кошелек успешно подключен!");
-        })
-        .catch(error => {
-          console.error("Ошибка подключения кошелька", error);
-        });
+    // Функция для возврата на главный экран
+    function goBack() {
+      window.location.href = "https://hitkrit.github.io/telegram/"; // Замените URL на ваш главный экран
     }
 
-    // Отправка транзакции 0.3 TON
-    function makeTransaction() {
-      const transactionDetails = {
-        to: tonConnect.connectedWallet.account.address,
-        value: 0.3, // Сумма в TON
-      };
+    // Пример функции подключения кошелька
+    function connectWallet() {
+      alert("Подключение кошелька...");
+    }
 
-      tonConnect.sendTransaction(transactionDetails)
-        .then(() => {
-          alert("Транзакция успешно отправлена!");
-        })
-        .catch(error => {
-          console.error("Ошибка при отправке транзакции", error);
-        });
+    // Пример функции для отправки транзакции
+    function makeTransaction() {
+      alert("Транзакция отправлена!");
     }
   </script>
 
