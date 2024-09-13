@@ -108,6 +108,17 @@
       cursor: pointer;
       z-index: 5; /* Поверх фоновой картинки */
     }
+
+    /* Невидимая кнопка поверх грибка FRIENDS */
+    #friends-button {
+      position: absolute;
+      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
+      right: 150px; /* Позиционируем грибок на картинке */
+      width: 90px; /* Примерный размер кнопки */
+      height: 90px; /* Примерный размер кнопки */
+      cursor: pointer;
+      z-index: 5; /* Поверх фоновой картинки */
+    }
   </style>
 </head>
 <body>
@@ -133,6 +144,9 @@
 
     <!-- Невидимая кнопка AIRDROP -->
     <div id="airdrop-button" onclick="openAirdropPage()"></div>
+
+    <!-- Невидимая кнопка FRIENDS -->
+    <div id="friends-button" onclick="openFriendsPage()"></div>
   </div>
 
   <script>
@@ -193,6 +207,12 @@
     function openAirdropPage() {
       window.location.href = "https://hitkrit.github.io/telegram/airdrop.html"; // Переход на страницу Airdrop
     }
+
+    // Открытие страницы Friends
+    function openFriendsPage() {
+      window.location.href = "https://hitkrit.github.io/telegram/friends.html"; // Переход на страницу Friends
+    }
   </script>
+
 </body>
 </html>
