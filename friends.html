@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Friends</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #ff0000;
+      margin-bottom: 20px;
+    }
+
+    .invite-link {
+      margin-bottom: 20px;
+      font-size: 18px;
+      background-color: #fff;
+      border: 2px solid #ff5733;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .friend-list {
+      width: 80%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    .friend-list li {
+      padding: 10px;
+      border: 1px solid #ddd;
+      margin-bottom: 5px;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+
+    .back-button {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .back-button:hover {
+      background-color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Friends</h1>
+
+  <!-- Уникальная ссылка для приглашений -->
+  <div class="invite-link">
+    Ваша ссылка для приглашений: <span id="invite-link"></span>
+  </div>
+
+  <!-- Список приглашённых друзей -->
+  <ul class="friend-list" id="friend-list">
+    <li>Друг 1</li>
+    <li>Друг 2</li>
+    <!-- Здесь будет список всех приглашённых друзей -->
+  </ul>
+
+  <!-- Кнопка возврата на главный экран -->
+  <button class="back-button" onclick="goBack()">Вернуться на главный экран</button>
+
+  <script>
+    // Генерация уникальной ссылки для приглашений
+    const userId = Math.random().toString(36).substring(7); // Пример генерации ID пользователя
+    const inviteLink = `https://hitkrit.github.io/telegram/friends.html?ref=${userId}`;
+    document.getElementById('invite-link').innerText = inviteLink;
+
+    // Функция возврата на главный экран
+    function goBack() {
+      window.location.href = "https://hitkrit.github.io/telegram/";
+    }
+
+    // Пример добавления приглашённого друга
+    const friendList = document.getElementById('friend-list');
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ref = urlParams.get('ref');
+
+    if (ref) {
+      // Если кто-то перешёл по ссылке, добавить его в список
+      const newFriend = document.createElement('li');
+      newFriend.textContent = `Приглашён друг с ID: ${ref}`;
+      friendList.appendChild(newFriend);
+
+      // Начисление монет за приглашённого друга
+      let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+      totalCoins += 500; // Начисляем 500 MAR$
+      localStorage.setItem('totalCoins', totalCoins);
+    }
+  </script>
+
+</body>
+</html>
