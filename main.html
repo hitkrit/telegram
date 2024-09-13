@@ -41,6 +41,25 @@
     tr:nth-child(even) {
       background-color: #f2f2f2;
     }
+
+    /* Кнопка возврата */
+    .back-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 200px;
+    }
+
+    .back-button:hover {
+      background-color: #e04e2f;
+    }
   </style>
 </head>
 <body>
@@ -67,19 +86,22 @@
         <td>Player2</td>
         <td>4500</td>
       </tr>
-      <!-- Добавьте больше игроков динамически -->
+      <!-- Динамическое добавление игроков -->
     </tbody>
   </table>
 
+  <!-- Кнопка возврата на главную -->
+  <a class="back-button" href="https://hitkrit.github.io/telegram/">Return to Main Screen</a>
+
   <script>
-    // Симулируем рейтинг игроков
+    // Симуляция рейтинга игроков
     const leaderboard = [
       { player: 'Player1', coins: 5000 },
       { player: 'Player2', coins: 4500 },
       { player: 'Player3', coins: 3000 }
     ];
 
-    // Отображаем таблицу
+    // Отображение таблицы
     const leaderboardTable = document.getElementById('leaderboard');
     leaderboardTable.innerHTML = leaderboard.map((player, index) => `
       <tr>
