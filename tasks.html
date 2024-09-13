@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tasks</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    h1 {
+      font-size: 36px;
+      color: #ff0000;
+      margin-bottom: 20px;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 80%;
+      max-width: 600px;
+      padding: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .task p {
+      margin: 0;
+    }
+
+    .task button {
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .task button:hover {
+      background-color: #ff0000;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .back-button:hover {
+      background-color: #ff0000;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Tasks</h1>
+
+  <!-- Список заданий -->
+  <div class="task">
+    <p>Подписаться на Telegram канал</p>
+    <button onclick="completeTask(this, 'telegram')">Выполнить</button>
+  </div>
+  <div class="task">
+    <p>Подписаться на YouTube канал</p>
+    <button onclick="completeTask(this, 'youtube')">Выполнить</button>
+  </div>
+  <div class="task">
+    <p>Подписаться на Twitter</p>
+    <button onclick="completeTask(this, 'twitter')">Выполнить</button>
+  </div>
+
+  <!-- Кнопка возврата на главный экран -->
+  <button class="back-button" onclick="goBack()">Вернуться на главный экран</button>
+
+  <script>
+    function completeTask(button, taskType) {
+      // Здесь можно добавить логику перехода по ссылкам
+      // Например, откроем новую вкладку с нужной ссылкой
+      switch (taskType) {
+        case 'telegram':
+          window.open('https://telegram.org', '_blank'); // Замените на правильную ссылку
+          break;
+        case 'youtube':
+          window.open('https://youtube.com', '_blank'); // Замените на правильную ссылку
+          break;
+        case 'twitter':
+          window.open('https://twitter.com', '_blank'); // Замените на правильную ссылку
+          break;
+      }
+      // Изменяем текст кнопки на "Забрать"
+      button.innerText = "Забрать";
+      button.onclick = function() {
+        collectReward(button);
+      };
+    }
+
+    function collectReward(button) {
+      // Начисляем 500 монет
+      let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+      totalCoins += 500; // Добавляем 500 MAR$
+      localStorage.setItem('totalCoins', totalCoins);
+      alert("500 MAR$ добавлены на ваш счёт!");
+      button.disabled = true; // Деактивируем кнопку после получения награды
+    }
+
+    function goBack() {
+      window.location.href = "https://hitkrit.github.io/telegram/"; // Возврат на главный экран
+    }
+  </script>
+
+</body>
+</html>
