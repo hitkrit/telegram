@@ -187,7 +187,7 @@
     </div>
 
     <!-- Невидимая кнопка для подключения кошелька -->
-    <div id="wallet-button" onclick="connectToTONKeeper()"></div>
+    <div id="wallet-button" onclick="connectToTONWallet()"></div>
 
     <!-- Невидимая кнопка AIRDROP -->
     <div id="airdrop-button" class="animated-button" onclick="openAirdropPage()"></div>
@@ -201,6 +201,9 @@
     <!-- Невидимая кнопка MAIN (для рейтинга) -->
     <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
   </div>
+
+  <!-- Подключение TonConnect SDK -->
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
 
   <script>
     let coins = 0;
@@ -244,28 +247,792 @@
     updateTapCounter();
     updateTotalCoinsCounter();
 
-    // Подключение к TON Keeper
-    function connectToTONKeeper() {
-      const tonKeeperDeeplink = "tonkeeper://connect/<client-id>"; // Здесь можно вставить реальный client-id
-      window.open(tonKeeperDeeplink, '_blank'); // Открываем приложение TON Keeper
+    // Подключение к TON Wallet через TonConnect SDK
+    async function connectToTONWallet() {
+      try {
+        const connector = new TonConnectSDK.TonConnect({
+          manifestUrl: 'https://telegram-kappa-blond.vercel.app/tonconnect-manifest.json'
+        });
+
+        const walletConnectionSource = {
+          universalLink: 'https://app.tonkeeper.com/tonВот обновленный код с интеграцией **TonConnect SDK** и подключением к **TON Wallet** через **TonConnect**:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Miner</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      overflow: hidden;
     }
 
-    // Открытие страницы Airdrop
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #tap-area {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Область кликабельной головы */
+    #head {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0);
+      z-index: 2;
+    }
+
+    /* Анимация при нажатии на кнопки */
+    .animated-button {
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .animated-button:active {
+      transform: scale(1.1);
+    }
+
+    /* Счётчик монет и $MAR */
+    #coin-counter {
+      position: absolute;
+      left: 50%;
+      top: calc(30% - 1cm);
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик оставшихся нажатий */
+    #tap-counter {
+      position: absolute;
+      left: calc(50% - 5cm);
+      top: calc(50% + 4cm);
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 5px 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик общего количества монет возле My Account */
+    #total-coins-counter {
+      position: absolute;
+      top: calc(20px + 0.5cm);
+      left: calc(180px - 2cm + 1cm);
+      font-size: 18px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      z-index: 4;
+    }
+
+    /* Невидимая кнопка поверх кошелька */
+    #wallet-button {
+      position: absolute;
+      top: 10px;  
+      right: 10px; 
+      width: 50px; 
+      height: 50px; 
+      cursor: pointer;
+      z-index: 5;
+      border: 2px solid transparent;
+      background-color: transparent;
+    }
+
+    /* Невидимая кнопка AIRDROP */
+    #airdrop-button {
+      position: absolute;
+      bottom: 15px;
+      right: 50px;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка FRIENDS */
+    #friends-button {
+      position: absolute;
+      bottom: 15px;
+      right: 145px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка TASKS */
+    #tasks-button {
+      position: absolute;
+      bottom: 15px;
+      right: 245px;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка MAIN */
+    #main-button {
+      position: absolute;
+      bottom: 15px;
+      left: 15px; /* Кнопка находится в левом нижнем углу */
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <!-- Счётчик монет -->
+    <div id="coin-counter">
+      <span id="coin-value">0</span>&nbsp;<span>$MAR</span>
+    </div>
+
+    <!-- Счётчик оставшихся нажатий -->
+    <div id="tap-counter">1000 / 1000</div>
+
+    <!-- Фоновая картинка -->
+    <div id="tap-area">
+      <!-- Кликая зона для головы -->
+      <div id="head"></div>
+    </div>
+
+    <!-- Общий счётчик заработанных монет рядом с My Account -->
+    <div id="total-coins-counter">
+      <span id="total-coins-value">0</span> $MAR
+    </div>
+
+    <!-- Невидимая кнопка для подключения кошелька -->
+    <div id="wallet-button" onclick="connectToTONWallet()"></div>
+
+    <!-- Невидимая кнопка AIRDROP -->
+    <div id="airdrop-button" class="animated-button" onclick="openAirdropPage()"></div>
+
+    <!-- Невидимая кнопка FRIENDS -->
+    <div id="friends-button" class="animated-button" onclick="openFriendsPage()"></div>
+
+    <!-- Невидимая кнопка TASKS -->
+    <div id="tasks-button" class="animated-button" onclick="openTasksPage()"></div>
+
+    <!-- Невидимая кнопка MAIN (для рейтинга) -->
+    <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
+  </div>
+
+  <!-- Подключение TonConnect SDK -->
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+
+  <script>
+    let coins = 0;
+    const totalTaps = 1000;
+    let tapsLeft = 1000;
+    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+
+    // Обновление счётчиков
+    function updateCoinCounter() {
+      document.getElementById('coin-value').innerText = coins;
+    }
+    function updateTapCounter() {
+      document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
+    }
+    function updateTotalCoinsCounter() {
+      document.getElementById('total-coins-value').innerText = totalCoins;
+    }
+
+    // Обработка нажатия на голову
+    document.getElementById('head').addEventListener('click', function() {
+      if (tapsLeft > 0) {
+        coins++;
+        tapsLeft--;
+        totalCoins++;
+        updateCoinCounter();
+        updateTapCounter();
+        updateTotalCoinsCounter();
+        localStorage.setItem('totalCoins', totalCoins);
+      } else {
+        alert("No more taps left. Wait for reset.");
+      }
+    });
+
+    // Восстановление нажатий каждые 3 часа
+    setInterval(function() {
+      tapsLeft = totalTaps;
+      updateTapCounter();
+    }, 3 * 60 * 60 * 1000);
+
+    updateCoinCounter();
+    updateTapCounter();
+    updateTotalCoinsCounter();
+
+    // Подключение к TON Wallet через TonConnect SDK
+    async function connectToTONWallet() {
+      try {
+        const connector = new TonConnectSDK.TonConnect({
+          manifestUrl: 'https://telegram-kappa-blond.vercel.app/tonconnect-manifest.json'
+        });
+
+        const walletConnectionSource = {
+          universalLink: 'https://app.tonkeeper.com/ton-connect',
+          bridgeUrl: 'https://bridge.tonapi.io/bridge'
+        };
+
+        await connector.connectВот обновленный код для вашего файла **index.html**, с интеграцией **TonConnect SDK** и подключением к **TON Keeper** для подключения кошелька:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Miner</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #tap-area {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Область кликабельной головы */
+    #head {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0);
+      z-index: 2;
+    }
+
+    /* Анимация при нажатии на кнопки */
+    .animated-button {
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .animated-button:active {
+      transform: scale(1.1);
+    }
+
+    /* Счётчик монет и $MAR */
+    #coin-counter {
+      position: absolute;
+      left: 50%;
+      top: calc(30% - 1cm);
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик оставшихся нажатий */
+    #tap-counter {
+      position: absolute;
+      left: calc(50% - 5cm);
+      top: calc(50% + 4cm);
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 5px 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик общего количества монет возле My Account */
+    #total-coins-counter {
+      position: absolute;
+      top: calc(20px + 0.5cm);
+      left: calc(180px - 2cm + 1cm);
+      font-size: 18px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      z-index: 4;
+    }
+
+    /* Невидимая кнопка поверх кошелька */
+    #wallet-button {
+      position: absolute;
+      top: 10px;  
+      right: 10px; 
+      width: 50px; 
+      height: 50px; 
+      cursor: pointer;
+      z-index: 5;
+      border: 2px solid transparent;
+      background-color: transparent;
+    }
+
+    /* Невидимая кнопка AIRDROP */
+    #airdrop-button {
+      position: absolute;
+      bottom: 15px;
+      right: 50px;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка FRIENDS */
+    #friends-button {
+      position: absolute;
+      bottom: 15px;
+      right: 145px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка TASKS */
+    #tasks-button {
+      position: absolute;
+      bottom: 15px;
+      right: 245px;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    /* Невидимая кнопка MAIN */
+    #main-button {
+      position: absolute;
+      bottom: 15px;
+      left: 15px; /* Кнопка находится в левом нижнем углу */
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <!-- Счётчик монет -->
+    <div id="coin-counter">
+      <span id="coin-value">0</span>&nbsp;<span>$MAR</span>
+    </div>
+
+    <!-- Счётчик оставшихся нажатий -->
+    <div id="tap-counter">1000 / 1000</div>
+
+    <!-- Фоновая картинка -->
+    <div id="tap-area">
+      <!-- Кликая зона для головы -->
+      <div id="head"></div>
+    </div>
+
+    <!-- Общий счётчик заработанных монет рядом с My Account -->
+    <div id="total-coins-counter">
+      <span id="total-coins-value">0</span> $MAR
+    </div>
+
+    <!-- Невидимая кнопка для подключения кошелька -->
+    <div id="wallet-button" onclick="connectToTONWallet()"></div>
+
+    <!-- Невидимая кнопка AIRDROP -->
+    <div id="airdrop-button" class="animated-button" onclick="openAirdropPage()"></div>
+
+    <!-- Невидимая кнопка FRIENDS -->
+    <div id="friends-button" class="animated-button" onclick="openFriendsPage()"></div>
+
+    <!-- Невидимая кнопка TASKS -->
+    <div id="tasks-button" class="animated-button" onclick="openTasksPage()"></div>
+
+    <!-- Невидимая кнопка MAIN (для рейтинга) -->
+    <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
+  </div>
+
+  <!-- Подключение TonConnect SDK -->
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+
+  <script>
+    let coins = 0;
+    const totalTaps = 1000;
+    let tapsLeft = 1000;
+    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+
+    // Обновление счётчиков
+    function updateCoinCounter() {
+      document.getElementById('coin-value').innerText = coins;
+    }
+    function updateTapCounter() {
+      document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
+    }
+    function updateTotalCoinsCounter() {
+      document.getElementById('total-coins-value').innerText = totalCoins;
+    }
+
+    // Обработка нажатия на голову
+    document.getElementById('head').addEventListener('click', function() {
+      if (tapsLeft > 0) {
+        coins++;
+        tapsLeft--;
+        totalCoins++;
+        updateCoinCounter();
+        updateTapCounter();
+        updateTotalCoinsCounter();
+        localStorage.setItem('totalCoins', totalCoins);
+      } else {
+        alert("No more taps left. Wait for reset.");
+      }
+    });
+
+    // Восстановление нажатий каждые 3 часа
+    setInterval(function() {
+      tapsLeft = totalTaps;
+      updateTapCounter();
+    }, 3 * 60 * 60 * 1000);
+
+    updateCoinCounter();
+    updateTapCounter();
+    updateTotalCoinsCounter();
+
+    // Подключение к TON Wallet через TonConnect SDK
+    async function connectToTONWallet() {
+      try {
+        const connector = new TonConnectSDK.TonConnect({
+          manifestUrl: 'https://telegram-kappa-blond.vercel.app/tonconnect-manifest.json'
+        });
+
+        const walletConnectionSource = {
+          universalLink: 'https://app.tonkeeper.com/ton-connect',
+          bridgeUrl: 'https://bridge.tonapi.io/bridgeВаш код уже настроен для интеграции с **TonConnect SDK** для подключения кошелька **TON Keeper**. Вот обновленный полный код для файла **index.html**, включая интеграцию и функционал для подключения к кошельку через **TON Keeper**:
+
+### Обновленный код **index.html**:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Miner</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      overflow: hidden;
+    }
+
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    #tap-area {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    #head {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .animated-button {
+      transition: transform 0.1s ease-in-out;
+    }
+
+    .animated-button:active {
+      transform: scale(1.1);
+    }
+
+    #coin-counter {
+      position: absolute;
+      left: 50%;
+      top: 30%;
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      z-index: 3;
+    }
+
+    #tap-counter {
+      position: absolute;
+      left: calc(50% - 5cm);
+      top: calc(50% + 4cm);
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 5px 10px;
+      z-index: 3;
+    }
+
+    #total-coins-counter {
+      position: absolute;
+      top: calc(20px + 0.5cm);
+      left: calc(180px - 2cm + 1cm);
+      font-size: 18px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff0000, #ff5733);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      z-index: 4;
+    }
+
+    #wallet-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      z-index: 5;
+      background-color: transparent;
+    }
+
+    #airdrop-button {
+      position: absolute;
+      bottom: 15px;
+      right: 50px;
+      width: 70px;
+      height: 70px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    #friends-button {
+      position: absolute;
+      bottom: 15px;
+      right: 145px;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    #tasks-button {
+      position: absolute;
+      bottom: 15px;
+      right: 245px;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    #main-button {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      width: 80px;
+      height: 80px;
+      cursor: pointer;
+      z-index: 5;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="coin-counter">
+      <span id="coin-value">0</span>&nbsp;<span>$MAR</span>
+    </div>
+
+    <div id="tap-counter">1000 / 1000</div>
+
+    <div id="tap-area">
+      <div id="head"></div>
+    </div>
+
+    <div id="total-coins-counter">
+      <span id="total-coins-value">0</span> $MAR
+    </div>
+
+    <div id="wallet-button" onclick="connectToTONWallet()"></div>
+    <div id="airdrop-button" class="animated-button" onclick="openAirdropPage()"></div>
+    <div id="friends-button" class="animated-button" onclick="openFriendsPage()"></div>
+    <div id="tasks-button" class="animated-button" onclick="openTasksPage()"></div>
+    <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
+  </div>
+
+  <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
+
+  <script>
+    let coins = 0;
+    const totalTaps = 1000;
+    let tapsLeft = 1000;
+    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+
+    function updateCoinCounter() {
+      document.getElementById('coin-value').innerText = coins;
+    }
+
+    function updateTapCounter() {
+      document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
+    }
+
+    function updateTotalCoinsCounter() {
+      document.getElementById('total-coins-value').innerText = totalCoins;
+    }
+
+    document.getElementById('head').addEventListener('click', function() {
+      if (tapsLeft > 0) {
+        coins++;
+        tapsLeft--;
+        totalCoins++;
+        updateCoinCounter();
+        updateTapCounter();
+        updateTotalCoinsCounter();
+        localStorage.setItem('totalCoins', totalCoins);
+      } else {
+        alert("No more taps left. Wait for reset.");
+      }
+    });
+
+    setInterval(function() {
+      tapsLeft = totalTaps;
+      updateTapCounter();
+    }, 3 * 60 * 60 * 1000);
+
+    updateCoinCounter();
+    updateTapCounter();
+    updateTotalCoinsCounter();
+
+    async function connectToTONWallet() {
+      try {
+        const connector = new TonConnectSDK.TonConnect({
+          manifestUrl: 'https://telegram-kappa-blond.vercel.app/tonconnect-manifest.json'
+        });
+
+        const walletConnectionSource = {
+          universalLink: 'https://app.tonkeeper.com/ton-connect',
+          bridgeUrl: 'https://bridge.tonapi.io/bridge'
+        };
+
+        await connector.connect(walletConnectionSource);
+      } catch (error) {
+        console.error('Ошибка при подключении кошелька:', error);
+      }
+    }
+
     function openAirdropPage() {
       window.location.href = "https://hitkrit.github.io/telegram/airdrop.html";
     }
 
-    // Открытие страницы Friends
     function openFriendsPage() {
       window.location.href = "https://hitkrit.github.io/telegram/friends.html";
     }
 
-    // Открытие страницы Tasks
     function openTasksPage() {
       window.location.href = "https://hitkrit.github.io/telegram/tasks.html";
     }
 
-    // Открытие страницы Main для рейтинга
     function openMainPage() {
       window.location.href = "https://hitkrit.github.io/telegram/main.html";
     }
