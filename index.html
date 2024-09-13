@@ -174,6 +174,7 @@
     <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
   </div>
 
+  <!-- Подключение TonConnect SDK -->
   <script src="https://unpkg.com/@tonconnect/sdk@latest/dist/tonconnect-sdk.min.js"></script>
 
   <script>
@@ -220,7 +221,7 @@
     async function connectToTONWallet() {
       try {
         const connector = new TonConnectSDK.TonConnect({
-          manifestUrl: 'https://github.com/hitkrit/telegram/blob/de7c04f9140f87778f50a32e8fd94133934df7c9/tonconnect-manifest.json'
+          manifestUrl: 'https://github.com/hitkrit/telegram/blob/cda270b75f5341d768e4796d4ad14c40ae815bc0/tonconnect-manifest.json'
         });
 
         const walletConnectionSource = {
