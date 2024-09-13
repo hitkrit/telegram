@@ -101,10 +101,10 @@
     /* Невидимая кнопка поверх кошелька */
     #wallet-button {
       position: absolute;
-      top: 10px;  /* Позиция кнопки для кошелька */
-      right: 10px; /* Настройте координаты под ваше изображение кошелька */
-      width: 50px; /* Настройте размер под размер кошелька */
-      height: 50px; /* Настройте размер под размер кошелька */
+      top: 10px;  
+      right: calc(10px + 5mm); /* Сдвиг на полсантиметра влево */
+      width: 50px; 
+      height: 50px; 
       cursor: pointer;
       z-index: 5;
       border: 2px solid transparent;
@@ -232,14 +232,14 @@
       window.open("https://hitkrit.github.io/telegram/airdrop.html", "_blank");
     }
 
-    // Открытие страницы Friends
+    // Открытие страницы Friends в Telegram
     function openFriendsPage() {
-      window.open("https://hitkrit.github.io/telegram/friends.html", "_blank");
+      window.location.href = "tg://resolve?domain=your_telegram_link"; // Здесь добавьте ссылку на Telegram
     }
 
-    // Открытие страницы Tasks
+    // Открытие страницы Tasks в Telegram
     function openTasksPage() {
-      window.open("https://hitkrit.github.io/telegram/tasks.html", "_blank");
+      window.location.href = "tg://resolve?domain=your_telegram_link"; // Здесь добавьте ссылку на Telegram
     }
   </script>
 
