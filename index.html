@@ -187,7 +187,7 @@
     </div>
 
     <!-- Невидимая кнопка для подключения кошелька -->
-    <div id="wallet-button" onclick="connectToTONWallet()"></div>
+    <div id="wallet-button" onclick="connectToTONKeeper()"></div>
 
     <!-- Невидимая кнопка AIRDROP -->
     <div id="airdrop-button" class="animated-button" onclick="openAirdropPage()"></div>
@@ -201,9 +201,6 @@
     <!-- Невидимая кнопка MAIN (для рейтинга) -->
     <div id="main-button" class="animated-button" onclick="openMainPage()"></div>
   </div>
-
-  <!-- Подключаем библиотеку TON Connect -->
-  <script src="https://cdn.jsdelivr.net/npm/@tonconnect/sdk@latest/dist/sdk.min.js"></script>
 
   <script>
     let coins = 0;
@@ -247,29 +244,10 @@
     updateTapCounter();
     updateTotalCoinsCounter();
 
-    // Подключение к кошельку TON
-    async function connectToTONWallet() {
-      try {
-        console.log('Инициализация TonConnect...');
-        const tonConnect = new TonConnect(); // Инициализация TonConnect SDK
-
-        // Проверяем, подключен ли уже кошелек
-        if (!tonConnect.wallet) {
-          console.log('Подключаем кошелек...');
-          // Показываем QR-код или открываем мобильное приложение для подключения кошелька
-          await tonConnect.connectWallet();
-
-          // Получаем адрес кошелька
-          const walletAddress = tonConnect.wallet.account.address;
-          console.log('Connected to wallet:', walletAddress);
-          alert('Кошелек успешно подключен: ' + walletAddress);
-        } else {
-          alert('Кошелек уже подключен');
-        }
-      } catch (error) {
-        console.error('Ошибка при подключении к кошельку TON:', error);
-        alert('Не удалось подключить кошелек. Проверьте настройки и попробуйте снова.');
-      }
+    // Подключение к TON Keeper
+    function connectToTONKeeper() {
+      const tonKeeperDeeplink = "tonkeeper://connect/<client-id>"; // Здесь можно вставить реальный client-id
+      window.open(tonKeeperDeeplink, '_blank'); // Открываем приложение TON Keeper
     }
 
     // Открытие страницы Airdrop
