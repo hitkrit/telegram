@@ -3,110 +3,214 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friends</title>
+  <title>Coin Miner</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       background-color: #f0f0f0;
-      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
     }
 
-    h1 {
-      font-size: 36px;
-      color: #ff0000;
-      margin-bottom: 20px;
+    #game-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
     }
 
-    .invite-link {
-      margin-bottom: 20px;
-      font-size: 18px;
-      background-color: #fff;
-      border: 2px solid #ff5733;
-      padding: 10px;
-      border-radius: 5px;
+    #tap-area {
+      width: 100vw;
+      height: 100vh;
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png'); /* Фоновая картинка */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      z-index: 1;
     }
 
-    .friend-list {
-      width: 80%;
-      max-width: 600px;
-      margin-bottom: 20px;
-    }
-
-    .friend-list li {
-      padding: 10px;
-      border: 1px solid #ddd;
-      margin-bottom: 5px;
-      background-color: #fff;
-      border-radius: 5px;
-    }
-
-    .back-button {
-      font-size: 18px;
-      padding: 10px 20px;
-      background-color: #ff5733;
-      color: white;
-      border: none;
+    /* Область кликабельной головы */
+    #head {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
       cursor: pointer;
-      border-radius: 5px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0);
+      z-index: 2;
     }
 
-    .back-button:hover {
-      background-color: #ff0000;
+    /* Счётчик монет и $MAR */
+    #coin-counter {
+      position: absolute;
+      left: 50%;
+      top: calc(30% - 1cm); /* Поднимаем на 1 см выше */
+      transform: translateX(-50%);
+      font-size: 36px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик оставшихся нажатий */
+    #tap-counter {
+      position: absolute;
+      left: calc(50% - 5cm); /* На 3 см влево */
+      top: calc(50% + 4cm); /* На 3 см вниз */
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 5px 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик общего количества монет возле My Account */
+    #total-coins-counter {
+      position: absolute;
+      top: calc(20px + 0.5cm); /* Сдвиг на 0.5 см вниз */
+      left: calc(180px - 2cm + 1cm); /* Сдвиг на 1 см вправо */
+      font-size: 18px; /* Уменьшенный размер шрифта */
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      z-index: 4;
+    }
+
+    /* Невидимая кнопка поверх грибка AIRDROP */
+    #airdrop-button {
+      position: absolute;
+      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
+      right: 45px; /* Позиционируем грибок на картинке */
+      width: 90px; /* Примерный размер кнопки */
+      height: 90px; /* Примерный размер кнопки */
+      cursor: pointer;
+      z-index: 5; /* Поверх фоновой картинки */
+    }
+
+    /* Невидимая кнопка поверх грибка FRIENDS */
+    #friends-button {
+      position: absolute;
+      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
+      right: 150px; /* Позиционируем грибок на картинке */
+      width: 90px; /* Примерный размер кнопки */
+      height: 90px; /* Примерный размер кнопки */
+      cursor: pointer;
+      z-index: 5; /* Поверх фоновой картинки */
     }
   </style>
 </head>
 <body>
+  <div id="game-container">
+    <!-- Счётчик монет -->
+    <div id="coin-counter">
+      <span id="coin-value">0</span>&nbsp;<span>$MAR</span>
+    </div>
 
-  <h1>Friends</h1>
+    <!-- Счётчик оставшихся нажатий -->
+    <div id="tap-counter">1000 / 1000</div>
 
-  <!-- Уникальная ссылка для приглашений -->
-  <div class="invite-link">
-    Ваша ссылка для приглашений: <span id="invite-link"></span>
+    <!-- Фоновая картинка -->
+    <div id="tap-area">
+      <!-- Кликая зона для головы -->
+      <div id="head"></div>
+    </div>
+
+    <!-- Общий счётчик заработанных монет рядом с My Account -->
+    <div id="total-coins-counter">
+      <span id="total-coins-value">0</span> $MAR
+    </div>
+
+    <!-- Невидимая кнопка AIRDROP -->
+    <div id="airdrop-button" onclick="openAirdropPage()"></div>
+
+    <!-- Невидимая кнопка FRIENDS -->
+    <div id="friends-button" onclick="openFriendsPage()"></div>
   </div>
 
-  <!-- Список приглашённых друзей -->
-  <ul class="friend-list" id="friend-list">
-    <li>Друг 1</li>
-    <li>Друг 2</li>
-    <!-- Здесь будет список всех приглашённых друзей -->
-  </ul>
-
-  <!-- Кнопка возврата на главный экран -->
-  <button class="back-button" onclick="goBack()">Вернуться на главный экран</button>
-
   <script>
-    // Генерация уникальной ссылки для приглашений
-    const userId = Math.random().toString(36).substring(7); // Пример генерации ID пользователя
-    const inviteLink = `https://hitkrit.github.io/telegram/friends.html?ref=${userId}`;
-    document.getElementById('invite-link').innerText = inviteLink;
+    let coins = 0;
+    const totalTaps = 1000;  // Всего нажатий
+    let tapsLeft = 1000;  // Оставшиеся нажатия
 
-    // Функция возврата на главный экран
-    function goBack() {
-      window.location.href = "https://hitkrit.github.io/telegram/";
+    // Получаем общий счётчик из localStorage, если есть
+    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+
+    // Обновление счётчика монет
+    function updateCoinCounter() {
+      document.getElementById('coin-value').innerText = coins;
     }
 
-    // Пример добавления приглашённого друга
-    const friendList = document.getElementById('friend-list');
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const ref = urlParams.get('ref');
+    // Обновление счётчика оставшихся нажатий
+    function updateTapCounter() {
+      document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
+    }
 
-    if (ref) {
-      // Если кто-то перешёл по ссылке, добавить его в список
-      const newFriend = document.createElement('li');
-      newFriend.textContent = `Приглашён друг с ID: ${ref}`;
-      friendList.appendChild(newFriend);
+    // Обновление общего счётчика монет
+    function updateTotalCoinsCounter() {
+      document.getElementById('total-coins-value').innerText = totalCoins;
+    }
 
-      // Начисление монет за приглашённого друга
-      let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
-      totalCoins += 500; // Начисляем 500 MAR$
-      localStorage.setItem('totalCoins', totalCoins);
+    // Обработка нажатия на голову
+    document.getElementById('head').addEventListener('click', function() {
+      if (tapsLeft > 0) {
+        coins++;
+        tapsLeft--;
+        totalCoins++;
+        updateCoinCounter();
+        updateTapCounter();
+        updateTotalCoinsCounter();
+
+        // Сохраняем общий счётчик монет в localStorage
+        localStorage.setItem('totalCoins', totalCoins);
+      } else {
+        alert("No more taps left. Wait for reset.");
+      }
+    });
+
+    // Восстановление нажатий каждые 3 часа
+    function resetTaps() {
+      tapsLeft = totalTaps;
+      updateTapCounter();
+    }
+
+    // Устанавливаем интервал на каждые 3 часа (3 * 60 * 60 * 1000 миллисекунд)
+    setInterval(resetTaps, 3 * 60 * 60 * 1000);
+
+    // Инициализация счётчиков при загрузке
+    updateCoinCounter();
+    updateTapCounter();
+    updateTotalCoinsCounter();
+
+    // Открытие страницы Airdrop
+    function openAirdropPage() {
+      window.location.href = "https://hitkrit.github.io/telegram/airdrop.html"; // Открытие страницы Airdrop
+    }
+
+    // Открытие страницы Friends
+    function openFriendsPage() {
+      window.location.href = "https://hitkrit.github.io/telegram/friends.html"; // Открытие страницы Friends
     }
   </script>
 
