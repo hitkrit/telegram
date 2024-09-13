@@ -67,6 +67,37 @@
       z-index: 3;
     }
 
+    /* Счётчик оставшихся нажатий */
+    #tap-counter {
+      position: absolute;
+      left: calc(50% - 5cm); /* На 3 см влево */
+      top: calc(50% + 4cm); /* На 3 см вниз */
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      padding: 5px 10px;
+      z-index: 3;
+    }
+
+    /* Счётчик общего количества монет возле My Account */
+    #total-coins-counter {
+      position: absolute;
+      top: 20px; /* Увеличиваем отступ сверху */
+      left: calc(180px - 3cm); /* Сдвигаем на 3 см влево */
+      font-size: 18px; /* Уменьшенный размер шрифта */
+      font-family: 'Poppins', sans-serif;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+      z-index: 4;
+    }
+
     /* Грибок AIRDROP */
     #airdrop {
       position: absolute;
@@ -84,10 +115,18 @@
       <span id="coin-value">0</span>&nbsp;<span>$MAR</span>
     </div>
 
+    <!-- Счётчик оставшихся нажатий -->
+    <div id="tap-counter">1000 / 1000</div>
+
     <!-- Фоновая картинка -->
     <div id="tap-area">
       <!-- Кликая зона для головы -->
       <div id="head"></div>
+    </div>
+
+    <!-- Общий счётчик заработанных монет рядом с My Account -->
+    <div id="total-coins-counter">
+      <span id="total-coins-value">0</span> $MAR
     </div>
 
     <!-- Грибок AIRDROP -->
@@ -98,9 +137,64 @@
   </div>
 
   <script>
+    let coins = 0;
+    const totalTaps = 1000;  // Всего нажатий
+    let tapsLeft = 1000;  // Оставшиеся нажатия
+
+    // Получаем общий счётчик из localStorage, если есть
+    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+
+    // Обновление счётчика монет
+    function updateCoinCounter() {
+      document.getElementById('coin-value').innerText = coins;
+    }
+
+    // Обновление счётчика оставшихся нажатий
+    function updateTapCounter() {
+      document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
+    }
+
+    // Обновление общего счётчика монет
+    function updateTotalCoinsCounter() {
+      document.getElementById('total-coins-value').innerText = totalCoins;
+    }
+
+    // Обработка нажатия на голову
+    document.getElementById('head').addEventListener('click', function() {
+      if (tapsLeft > 0) {
+        coins++;
+        tapsLeft--;
+        totalCoins++;
+        updateCoinCounter();
+        updateTapCounter();
+        updateTotalCoinsCounter();
+
+        // Сохраняем общий счётчик монет в localStorage
+        localStorage.setItem('totalCoins', totalCoins);
+      } else {
+        alert("No more taps left. Wait for reset.");
+      }
+    });
+
+    // Восстановление нажатий каждые 3 часа
+    function resetTaps() {
+      tapsLeft = totalTaps;
+      updateTapCounter();
+    }
+
+    // Устанавливаем интервал на каждые 3 часа (3 * 60 * 60 * 1000 миллисекунд)
+    setInterval(resetTaps, 3 * 60 * 60 * 1000);
+
+    // Инициализация счётчиков при загрузке
+    updateCoinCounter();
+    updateTapCounter();
+    updateTotalCoinsCounter();
+
+    // Открытие страницы Airdrop
     function openAirdropPage() {
       window.location.href = "https://github.com/hitkrit/telegram/blob/9aa94fb213645b4208e12175d54417ac01855781/airdrop.html"; // Переход на страницу Airdrop
     }
   </script>
 </body>
 </html>
+
