@@ -4,9 +4,89 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Friends</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #ff5733;
+    }
+
+    #referral-link {
+      font-size: 18px;
+      color: #007bff;
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .friend-list {
+      margin-top: 20px;
+    }
+
+    .friend {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+    }
+  </style>
 </head>
 <body>
-  <h1>Friends Page</h1>
-  <p>This is the Friends page.</p>
+
+  <h1>Invite Friends</h1>
+  <p>Share your referral link and invite friends to earn rewards!</p>
+
+  <!-- Уникальная реферальная ссылка -->
+  <a id="referral-link" href="#">https://example.com/invite?user=uniqueUserID</a>
+
+  <!-- Список приглашённых друзей -->
+  <h2>Invited Friends</h2>
+  <div class="friend-list" id="friend-list">
+    <div class="friend">No friends invited yet.</div>
+  </div>
+
+  <script>
+    const referralLink = document.getElementById('referral-link');
+    const friendList = document.getElementById('friend-list');
+
+    // Симулируем уникальную ссылку для каждого пользователя
+    const uniqueUserID = 'user12345';
+    referralLink.href = `https://example.com/invite?user=${uniqueUserID}`;
+    referralLink.innerText = referralLink.href;
+
+    // Список друзей
+    const invitedFriends = localStorage.getItem('invitedFriends') ? JSON.parse(localStorage.getItem('invitedFriends')) : [];
+
+    // Если друзья приглашены, отображаем их
+    function renderFriends() {
+      friendList.innerHTML = '';
+      if (invitedFriends.length > 0) {
+        invitedFriends.forEach(friend => {
+          const friendDiv = document.createElement('div');
+          friendDiv.classList.add('friend');
+          friendDiv.innerText = `${friend.name} - Earned 500 $MAR`;
+          friendList.appendChild(friendDiv);
+        });
+      } else {
+        friendList.innerHTML = '<div class="friend">No friends invited yet.</div>';
+      }
+    }
+
+    // Симулируем добавление друга
+    function inviteFriend(friendName) {
+      invitedFriends.push({ name: friendName });
+      localStorage.setItem('invitedFriends', JSON.stringify(invitedFriends));
+      renderFriends();
+    }
+
+    // Для тестирования: Добавить друга
+    inviteFriend('John Doe'); // Вызываем эту функцию при каждом новом приглашении друга
+
+    renderFriends();
+  </script>
+
 </body>
 </html>
