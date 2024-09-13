@@ -249,19 +249,29 @@
 
     // Подключение к кошельку TON
     async function connectToTONWallet() {
-      const tonConnect = new TonConnect(); // Инициализация TonConnect SDK
+      try {
+        console.log('Initializing TonConnect...');
+        const tonConnect = new TonConnect(); // Инициализация TonConnect SDK
 
-      // Проверяем, подключен ли уже кошелек
-      if (!tonConnect.wallet) {
-        // Показываем QR-код или открываем мобильное приложение для подключения кошелька
-        await tonConnect.connectWallet();
+        console.log('TonConnect initialized:', tonConnect);
 
-        // Получаем адрес кошелька
-        const walletAddress = tonConnect.wallet.account.address;
-        console.log('Connected to wallet:', walletAddress);
-        alert('Кошелек успешно подключен: ' + walletAddress);
-      } else {
-        alert('Кошелек уже подключен');
+        // Проверяем, подключен ли уже кошелек
+        if (!tonConnect.wallet) {
+          console.log('No wallet connected. Initiating connection...');
+          // Показываем QR-код или открываем мобильное приложение для подключения кошелька
+          await tonConnect.connectWallet();
+
+          // Получаем адрес кошелька
+          const walletAddress = tonConnect.wallet.account.address;
+          console.log('Connected to wallet:', walletAddress);
+          alert('Кошелек успешно подключен: ' + walletAddress);
+        } else {
+          console.log('Wallet is already connected:', tonConnect.wallet);
+          alert('Кошелек уже подключен');
+        }
+      } catch (error) {
+        console.error('Error connecting to wallet:', error);
+        alert('Ошибка подключения к кошельку: ' + error.message);
       }
     }
 
