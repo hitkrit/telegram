@@ -1,7 +1,7 @@
 {
-  "url": "https://myapp.com",
-  "name": "My App",
-  "iconUrl": "https://myapp.com/icon.png",
-  "termsOfUseUrl": "https://myapp.com/terms",
-  "privacyPolicyUrl": "https://myapp.com/privacy"
+  "url": "https://telegram-kappa-blond.vercel.app", 
+  "name": "Telegram Bot", 
+  "iconUrl": "https://telegram-kappa-blond.vercel.app/icon.png", 
+  "termsOfUseUrl": "https://telegram-kappa-blond.vercel.app/terms", 
+  "privacyPolicyUrl": "https://telegram-kappa-blond.vercel.app/privacy"
 }
