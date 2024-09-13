@@ -25,7 +25,7 @@
     #tap-area {
       width: 100vw;
       height: 100vh;
-      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png');
+      background-image: url('https://raw.githubusercontent.com/hitkrit/telegram/384c7234429708553ed1f421be19c360c89737fa/maine%20(1).png'); /* Фоновая картинка */
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
@@ -51,7 +51,7 @@
     #coin-counter {
       position: absolute;
       left: 50%;
-      top: calc(30% - 1cm);
+      top: calc(30% - 1cm); /* Поднимаем на 1 см выше */
       transform: translateX(-50%);
       font-size: 36px;
       font-weight: bold;
@@ -59,7 +59,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(45deg, #ff0000, #ff5733);
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -70,12 +70,12 @@
     /* Счётчик оставшихся нажатий */
     #tap-counter {
       position: absolute;
-      left: calc(50% - 5cm);
-      top: calc(50% + 4cm);
+      left: calc(50% - 5cm); /* На 3 см влево */
+      top: calc(50% + 4cm); /* На 3 см вниз */
       font-size: 24px;
       font-weight: bold;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(45deg, #ff0000, #ff5733);
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -86,12 +86,12 @@
     /* Счётчик общего количества монет возле My Account */
     #total-coins-counter {
       position: absolute;
-      top: calc(20px + 0.5cm);
-      left: calc(180px - 2cm + 1cm);
-      font-size: 18px;
+      top: calc(20px + 0.5cm); /* Сдвиг на 0.5 см вниз */
+      left: calc(180px - 2cm + 1cm); /* Сдвиг на 1 см вправо */
+      font-size: 18px; /* Уменьшенный размер шрифта */
       font-family: 'Poppins', sans-serif;
       font-weight: bold;
-      background: linear-gradient(45deg, #ff0000, #ff5733);
+      background: linear-gradient(45deg, #ff0000, #ff5733); /* Красный градиент */
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
@@ -101,34 +101,23 @@
     /* Невидимая кнопка поверх грибка AIRDROP */
     #airdrop-button {
       position: absolute;
-      bottom: 15px;
-      right: 45px;
-      width: 80px;
-      height: 80px;
+      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
+      right: 45px; /* Позиционируем грибок на картинке */
+      width: 90px; /* Примерный размер кнопки */
+      height: 90px; /* Примерный размер кнопки */
       cursor: pointer;
-      z-index: 5;
+      z-index: 5; /* Поверх фоновой картинки */
     }
 
     /* Невидимая кнопка поверх грибка FRIENDS */
     #friends-button {
       position: absolute;
-      bottom: 15px;
-      right: 140px;
-      width: 70px;
-      height: 70px;
+      bottom: 15px; /* Позиционируем внизу относительно грибка на картинке */
+      right: 150px; /* Позиционируем грибок на картинке */
+      width: 90px; /* Примерный размер кнопки */
+      height: 90px; /* Примерный размер кнопки */
       cursor: pointer;
-      z-index: 5;
-    }
-
-    /* Невидимая кнопка поверх грибка TASKS */
-    #tasks-button {
-      position: absolute;
-      bottom: 15px;
-      right: 240px;
-      width: 90px;
-      height: 90px;
-      cursor: pointer;
-      z-index: 5;
+      z-index: 5; /* Поверх фоновой картинки */
     }
   </style>
 </head>
@@ -158,24 +147,27 @@
 
     <!-- Невидимая кнопка FRIENDS -->
     <div id="friends-button" onclick="openFriendsPage()"></div>
-
-    <!-- Невидимая кнопка TASKS -->
-    <div id="tasks-button" onclick="openTasksPage()"></div>
   </div>
 
   <script>
     let coins = 0;
-    const totalTaps = 1000;
-    let tapsLeft = 1000;
+    const totalTaps = 1000;  // Всего нажатий
+    let tapsLeft = 1000;  // Оставшиеся нажатия
+
+    // Получаем общий счётчик из localStorage, если есть
     let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
 
-    // Обновление счётчиков
+    // Обновление счётчика монет
     function updateCoinCounter() {
       document.getElementById('coin-value').innerText = coins;
     }
+
+    // Обновление счётчика оставшихся нажатий
     function updateTapCounter() {
       document.getElementById('tap-counter').innerText = totalTaps + ' / ' + tapsLeft;
     }
+
+    // Обновление общего счётчика монет
     function updateTotalCoinsCounter() {
       document.getElementById('total-coins-value').innerText = totalCoins;
     }
@@ -189,6 +181,8 @@
         updateCoinCounter();
         updateTapCounter();
         updateTotalCoinsCounter();
+
+        // Сохраняем общий счётчик монет в localStorage
         localStorage.setItem('totalCoins', totalCoins);
       } else {
         alert("No more taps left. Wait for reset.");
@@ -196,28 +190,27 @@
     });
 
     // Восстановление нажатий каждые 3 часа
-    setInterval(function() {
+    function resetTaps() {
       tapsLeft = totalTaps;
       updateTapCounter();
-    }, 3 * 60 * 60 * 1000);
+    }
 
+    // Устанавливаем интервал на каждые 3 часа (3 * 60 * 60 * 1000 миллисекунд)
+    setInterval(resetTaps, 3 * 60 * 60 * 1000);
+
+    // Инициализация счётчиков при загрузке
     updateCoinCounter();
     updateTapCounter();
     updateTotalCoinsCounter();
 
     // Открытие страницы Airdrop
     function openAirdropPage() {
-      window.open("https://hitkrit.github.io/telegram/airdrop.html", "_blank");
+      window.location.href = "https://hitkrit.github.io/telegram/airdrop.html"; // Открытие страницы Airdrop
     }
 
     // Открытие страницы Friends
     function openFriendsPage() {
-      window.open("https://hitkrit.github.io/telegram/friends.html", "_blank");
-    }
-
-    // Открытие страницы Tasks
-    function openTasksPage() {
-      window.open("https://hitkrit.github.io/telegram/tasks.html", "_blank");
+      window.location.href = "https://hitkrit.github.io/telegram/friends.html"; // Открытие страницы Friends
     }
   </script>
 
