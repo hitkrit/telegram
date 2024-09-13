@@ -29,6 +29,17 @@
     .completed {
       color: green;
     }
+
+    /* Стиль для кнопки возврата */
+    .back-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff5733;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -59,6 +70,9 @@
     </div>
   </div>
 
+  <!-- Кнопка возврата на главную -->
+  <button class="back-button" onclick="goBack()">Return to Main Screen</button>
+
   <script>
     const completedTasks = localStorage.getItem('completedTasks') ? JSON.parse(localStorage.getItem('completedTasks')) : [];
 
@@ -79,6 +93,11 @@
     }
 
     renderTasks();
+
+    // Функция возврата на главную страницу
+    function goBack() {
+      window.location.href = 'https://hitkrit.github.io/telegram/'; // Замените ссылку на главную страницу
+    }
   </script>
 
 </body>
