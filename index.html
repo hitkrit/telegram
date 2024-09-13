@@ -122,13 +122,13 @@
       z-index: 5;
     }
 
-    /* Невидимая кнопка FRIENDS */
+    /* Невидимая кнопка FRIENDS (сдвинутая на полсантиметра левее и уменьшенная) */
     #friends-button {
       position: absolute;
       bottom: 15px;
-      right: 140px;
-      width: 70px;
-      height: 70px;
+      right: 140px; /* Было right: 140px; теперь левее */
+      width: 60px; /* Сделали кнопку немного меньше */
+      height: 60px; /* Сделали кнопку немного меньше */
       cursor: pointer;
       z-index: 5;
     }
@@ -172,7 +172,7 @@
     <!-- Невидимая кнопка AIRDROP -->
     <div id="airdrop-button" onclick="openAirdropPage()"></div>
 
-    <!-- Невидимая кнопка FRIENDS -->
+    <!-- Невидимая кнопка FRIENDS (сдвинутая и уменьшенная) -->
     <div id="friends-button" onclick="openFriendsPage()"></div>
 
     <!-- Невидимая кнопка TASKS -->
