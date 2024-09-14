@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Friends</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Friends Page</title>
   <style>
     body, html {
       margin: 0;
@@ -15,170 +14,129 @@
       height: 100vh;
       background-color: #f0f0f0;
       overflow: hidden;
-      font-family: 'Poppins', sans-serif;
+      font-family: Arial, sans-serif;
     }
 
     #friends-container {
-      width: 100vw;
-      height: 100vh;
-      background-image: url('https://github.com/hitkrit/telegram/blob/546de3fd21d0f41a7d7ed4db32354aef811b1afb/%D0%94%D0%B8%D0%B7%D0%B0%D0%B9%D0%BD%20%D0%B1%D0%B5%D0%B7%20%D0%BD%D0%B0%D0%B7%D0%B2%D0%B0%D0%BD%D0%B8%D1%8F%20(2).png?raw=true');
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
       position: relative;
-    }
-
-    .content {
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translate(-50%, -15%);
-      background-color: rgba(255, 255, 255, 0.9);
-      padding: 20px;
+      width: 80vw;
+      height: 80vh;
+      background-color: #ffffff;
       border-radius: 10px;
-      text-align: center;
-      width: 80%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
     }
 
-    h2 {
-      font-size: 28px;
-      color: #333;
-      margin-bottom: 10px;
+    #total-earnings {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff5733;
+      margin-bottom: 20px;
     }
 
-    p {
-      font-size: 18px;
-      color: #333;
-      margin: 10px 0;
+    #friends-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      height: 60%;
+      overflow-y: auto;
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
-    .invite-link {
-      font-size: 16px;
-      color: #007bff;
-      text-decoration: underline;
-      cursor: pointer;
-      margin-top: 10px;
+    #friends-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
     }
 
-    .back-button {
+    #invite-buttons {
       margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #007bff;
-      color: white;
-      font-size: 18px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: space-between;
     }
 
     .invite-button {
-      margin-top: 20px;
-      padding: 10px 20px;
       background-color: #28a745;
       color: white;
-      font-size: 18px;
+      padding: 10px 20px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
     }
 
-    .friends-list {
-      margin-top: 20px;
-      text-align: left;
+    .invite-button:hover {
+      background-color: #218838;
     }
 
-    .friend-entry {
-      display: flex;
-      justify-content: space-between;
-      font-size: 18px;
-      margin-bottom: 10px;
+    .invite-button.copy {
+      background-color: #007bff;
     }
 
-    .friend-name {
-      color: #333;
-    }
-
-    .friend-reward {
-      color: green;
-      font-weight: bold;
+    .invite-button.copy:hover {
+      background-color: #0069d9;
     }
   </style>
 </head>
 <body>
+
   <div id="friends-container">
-    <div class="content">
-      <!-- Блок общего заработка -->
-      <h2>Total Earnings</h2>
-      <p id="total-earnings">0 $MAR</p>
-      <p>500 $MAR per invited friend</p>
+    <h2>Friends</h2>
 
-      <!-- Список приглашённых друзей -->
-      <div class="friends-list">
-        <h2>Your Friends</h2>
-        <div id="friends-list"></div>
-      </div>
+    <!-- Блок общего заработка -->
+    <div id="total-earnings">Total Earned: 0 $MAR</div>
 
-      <!-- Кнопка приглашения -->
-      <button class="invite-button" onclick="inviteFriend()">Invite a Friend</button>
+    <!-- Список приглашенных друзей -->
+    <ul id="friends-list">
+      <!-- Пример отображения -->
+      <li><span>@friend1</span><span>500 $MAR</span></li>
+      <li><span>@friend2</span><span>500 $MAR</span></li>
+    </ul>
 
-      <!-- Кнопка возврата на главную -->
-      <button class="back-button" onclick="goBack()">Back</button>
+    <!-- Кнопки для приглашения -->
+    <div id="invite-buttons">
+      <button class="invite-button" onclick="inviteFriend()">Invite Friend</button>
+      <button class="invite-button copy" onclick="copyInviteLink()">Copy Link</button>
     </div>
   </div>
 
   <script>
-    let totalEarnings = 0; // Общий заработок пользователя
-    let friends = []; // Список приглашённых друзей
-    let userId = 12345678; // Уникальный ID пользователя (получите этот ID через Telegram Bot API)
+    let userId = "123456";  // Уникальный ID пользователя (замените на настоящий)
+    const inviteLink = `https://t.me/GainGrid_bot?start=${userId}`;
 
-    // Функция добавления друга
-    function addFriend(name) {
-      friends.push(name);
-      totalEarnings += 500;
-      updateFriendsList();
-      updateEarnings();
+    // Функция для приглашения друга через Telegram
+    function inviteFriend() {
+      window.open(`https://t.me/share/url?url=${encodeURIComponent(inviteLink)}`, '_blank');
     }
 
-    // Функция обновления списка друзей
-    function updateFriendsList() {
-      const friendsList = document.getElementById('friends-list');
-      friendsList.innerHTML = ''; // Очищаем список
-      friends.forEach(friend => {
-        const friendEntry = document.createElement('div');
-        friendEntry.classList.add('friend-entry');
-        friendEntry.innerHTML = `<span class="friend-name">${friend}</span><span class="friend-reward">500 $MAR</span>`;
-        friendsList.appendChild(friendEntry);
+    // Функция для копирования ссылки в буфер обмена
+    function copyInviteLink() {
+      navigator.clipboard.writeText(inviteLink).then(function() {
+        alert('Invite link copied to clipboard!');
+      }, function(err) {
+        console.error('Could not copy text: ', err);
       });
     }
 
-    // Обновление общего заработка
-    function updateEarnings() {
-      document.getElementById('total-earnings').innerText = `${totalEarnings} $MAR`;
-      localStorage.setItem('totalEarnings', totalEarnings);
+    // Здесь можно добавить динамическое обновление общего заработка и списка друзей
+    function updateEarnings(totalEarnings) {
+      document.getElementById('total-earnings').textContent = `Total Earned: ${totalEarnings} $MAR`;
     }
 
-    // Открытие чатов в Telegram для отправки приглашения
-    function inviteFriend() {
-      const inviteLink = `https://t.me/GainGrid_bot?start=${userId}`; // Уникальная ссылка приглашения на бота
-      const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=Join%20my%20game!`;
-      window.open(telegramUrl, '_blank');
+    function addFriendToList(friendUsername, earnings) {
+      const friendsList = document.getElementById('friends-list');
+      const newFriend = document.createElement('li');
+      newFriend.innerHTML = `<span>@${friendUsername}</span><span>${earnings} $MAR</span>`;
+      friendsList.appendChild(newFriend);
     }
 
-    // Возврат на главную
-    function goBack() {
-      window.location.href = "https://hitkrit.github.io/telegram/index.html";
-    }
-
-    // Восстановление данных при загрузке страницы
-    window.onload = function() {
-      const storedEarnings = localStorage.getItem('totalEarnings');
-      if (storedEarnings) {
-        totalEarnings = parseInt(storedEarnings, 10);
-      }
-      updateEarnings();
-    };
+    // Пример динамического добавления друга (можно связать с сервером)
+    addFriendToList('newFriend', 500);
+    updateEarnings(1000);  // Обновить заработанные монеты
   </script>
 
 </body>
