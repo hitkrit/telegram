@@ -25,47 +25,38 @@
       position: relative;
     }
 
-    h1 {
-      position: absolute;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      color: white;
-      font-size: 48px;
-      font-family: Arial, sans-serif;
+    .task-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 80%;
+      margin: 10px 0;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
     }
 
-    .task {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: rgba(255, 255, 255, 0.8);
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
+    .task-text {
       font-size: 20px;
       font-family: Arial, sans-serif;
     }
 
-    .task:first-of-type {
-      top: 150px;
-    }
-
-    .task:nth-of-type(2) {
-      top: 250px;
-    }
-
-    .task:nth-of-type(3) {
-      top: 350px;
-    }
-
-    .task button {
-      padding: 10px;
-      background-color: #28a745;
-      color: white;
+    .task-button {
+      padding: 10px 20px;
+      font-size: 16px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
+    }
+
+    .blue-button {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .orange-button {
+      background-color: #ff8c00;
+      color: white;
     }
 
     .back-button {
@@ -85,16 +76,14 @@
 </head>
 <body>
   <div id="airdrop-container">
-    <h1>Airdrop</h1>
-
-    <div class="task">
-      Подключите кошелек
-      <button onclick="connectWallet()">Подключить</button>
+    <div class="task-row">
+      <div class="task-text">Подключите кошелек</div>
+      <button class="task-button blue-button" onclick="connectWallet()">Подключить</button>
     </div>
 
-    <div class="task">
-      Сделайте транзакцию
-      <button onclick="makeTransaction()">Выполнить</button>
+    <div class="task-row" style="margin-top: 20px;">
+      <div class="task-text">Сделайте транзакцию</div>
+      <button class="task-button orange-button" onclick="makeTransaction()">Выполнить</button>
     </div>
 
     <button class="back-button" onclick="goBack()">Назад</button>
