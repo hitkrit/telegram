@@ -158,20 +158,11 @@
       localStorage.setItem('totalEarnings', totalEarnings);
     }
 
-    // Имитация приглашения друга
+    // Открытие чатов в Telegram для отправки приглашения
     function inviteFriend() {
-      const friendName = prompt('Enter the name of your friend:');
-      if (friendName) {
-        addFriend(friendName);
-      }
-    }
-
-    // Копирование ссылки приглашения
-    function copyInviteLink() {
       const inviteLink = 'https://hitkrit.github.io/telegram/invite.html'; // Уникальная ссылка приглашения
-      navigator.clipboard.writeText(inviteLink).then(() => {
-        alert('Invitation link copied to clipboard!');
-      });
+      const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=Join%20my%20game!`;
+      window.open(telegramUrl, '_blank');
     }
 
     // Возврат на главную
@@ -188,5 +179,6 @@
       updateEarnings();
     };
   </script>
+
 </body>
 </html>
