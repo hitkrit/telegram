@@ -30,11 +30,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      width: 60%;
+      width: 70%; /* Увеличение ширины для одной строки */
       margin: 30px 0;
       padding: 10px;
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 10px;
+      white-space: nowrap; /* Для предотвращения переноса строк */
     }
 
     .task-text {
@@ -77,7 +78,7 @@
 </head>
 <body>
   <div id="airdrop-container">
-    <div class="task-row" style="margin-top: 30vh;"> <!-- Опускаем строки -->
+    <div class="task-row" style="margin-top: calc(33vh + 3cm);"> <!-- Опускаем строки на 3 см ниже -->
       <div class="task-text">Подключите кошелек</div>
       <button class="task-button blue-button" onclick="connectWallet()">Подключить</button>
     </div>
@@ -103,5 +104,6 @@
       window.location.href = "https://hitkrit.github.io/telegram/index.html";
     }
   </script>
+
 </body>
 </html>
