@@ -94,12 +94,25 @@
   <a class="back-button" href="https://hitkrit.github.io/telegram/">Return to Main Screen</a>
 
   <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id') || 'defaultUser'; // Get user_id from the URL
+
     // Симуляция рейтинга игроков
-    const leaderboard = [
-      { player: 'Player1', coins: 5000 },
-      { player: 'Player2', coins: 4500 },
-      { player: 'Player3', coins: 3000 }
-    ];
+    const leaderboardData = JSON.parse(localStorage.getItem('leaderboard')) || {
+      defaultUser: [
+        { player: 'Player1', coins: 5000 },
+        { player: 'Player2', coins: 4500 },
+        { player: 'Player3', coins: 3000 }
+      ]
+    };
+
+    // Ensure leaderboard exists for this user
+    if (!leaderboardData[userId]) {
+      leaderboardData[userId] = leaderboardData.defaultUser; // Copy default leaderboard
+      localStorage.setItem('leaderboard', JSON.stringify(leaderboardData));
+    }
+
+    const leaderboard = leaderboardData[userId];
 
     // Отображение таблицы
     const leaderboardTable = document.getElementById('leaderboard');
