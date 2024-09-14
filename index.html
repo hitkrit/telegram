@@ -177,7 +177,11 @@
     let coins = 0;
     const totalTaps = 1000;
     let tapsLeft = 1000;
-    let totalCoins = localStorage.getItem('totalCoins') ? parseInt(localStorage.getItem('totalCoins')) : 0;
+
+    // Получаем user_id из URL (индивидуальный для каждого пользователя)
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id') || 'default';  // Если не указан user_id, то ставим "default"
+    let totalCoins = localStorage.getItem(`totalCoins_${userId}`) ? parseInt(localStorage.getItem(`totalCoins_${userId}`)) : 0;
 
     // Обновление счётчиков
     function updateCoinCounter() {
@@ -199,7 +203,7 @@
         updateCoinCounter();
         updateTapCounter();
         updateTotalCoinsCounter();
-        localStorage.setItem('totalCoins', totalCoins);
+        localStorage.setItem(`totalCoins_${userId}`, totalCoins);  // Сохраняем прогресс для каждого пользователя отдельно
       } else {
         alert("No more taps left. Wait for reset.");
       }
@@ -217,22 +221,22 @@
 
     // Открытие страницы Airdrop
     function openAirdropPage() {
-      window.location.href = "https://hitkrit.github.io/telegram/airdrop.html";
+      window.location.href = `https://hitkrit.github.io/telegram/airdrop.html?user_id=${userId}`;
     }
 
     // Открытие страницы Friends
     function openFriendsPage() {
-      window.location.href = "https://hitkrit.github.io/telegram/friends.html";
+      window.location.href = `https://hitkrit.github.io/telegram/friends.html?user_id=${userId}`;
     }
 
     // Открытие страницы Tasks
     function openTasksPage() {
-      window.location.href = "https://hitkrit.github.io/telegram/tasks.html";
+      window.location.href = `https://hitkrit.github.io/telegram/tasks.html?user_id=${userId}`;
     }
 
     // Открытие страницы Main для рейтинга
     function openMainPage() {
-      window.location.href = "https://hitkrit.github.io/telegram/main.html";
+      window.location.href = `https://hitkrit.github.io/telegram/main.html?user_id=${userId}`;
     }
   </script>
 </body>
