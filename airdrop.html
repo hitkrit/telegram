@@ -16,7 +16,7 @@
       height: 100vh;
       background-color: #f0f0f0;
       overflow: hidden;
-      font-family: 'Poppins', sans-serif; /* Используем шрифт Poppins для всего текста */
+      font-family: 'Poppins', sans-serif; /* Шрифт Poppins для всего текста */
     }
 
     #airdrop-container {
@@ -45,6 +45,9 @@
       font-size: 20px;
       font-family: 'Poppins', sans-serif; /* Используем шрифт Poppins */
       font-weight: 600; /* Немного утолщаем текст */
+      background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet); /* Градиент для разноцветных букв */
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .task-button {
@@ -85,25 +88,25 @@
 <body>
   <div id="airdrop-container">
     <div class="task-row" style="margin-top: calc(33vh + 3cm);"> <!-- Опускаем строки на 3 см ниже -->
-      <div class="task-text">Подключите кошелек</div>
-      <button class="task-button blue-button" onclick="connectWallet()">Подключить</button>
+      <div class="task-text">Connect Wallet</div>
+      <button class="task-button blue-button" onclick="connectWallet()">Connect</button>
     </div>
 
     <div class="task-row" style="margin-top: 30px;">
-      <div class="task-text">Сделайте транзакцию</div>
-      <button class="task-button orange-button" onclick="makeTransaction()">Выполнить</button>
+      <div class="task-text">Make a Transaction</div>
+      <button class="task-button orange-button" onclick="makeTransaction()">Perform</button>
     </div>
 
-    <button class="back-button" onclick="goBack()">Назад</button>
+    <button class="back-button" onclick="goBack()">Back</button>
   </div>
 
   <script>
     function connectWallet() {
-      alert("Функция подключения кошелька будет добавлена");
+      alert("Wallet connection functionality will be added.");
     }
 
     function makeTransaction() {
-      alert("Функция транзакции будет добавлена");
+      alert("Transaction functionality will be added.");
     }
 
     function goBack() {
