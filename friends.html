@@ -131,6 +131,7 @@
   <script>
     let totalEarnings = 0; // Общий заработок пользователя
     let friends = []; // Список приглашённых друзей
+    let userId = 12345678; // Уникальный ID пользователя (получите этот ID через Telegram Bot API)
 
     // Функция добавления друга
     function addFriend(name) {
@@ -160,7 +161,7 @@
 
     // Открытие чатов в Telegram для отправки приглашения
     function inviteFriend() {
-      const inviteLink = 'https://hitkrit.github.io/telegram/invite.html'; // Уникальная ссылка приглашения
+      const inviteLink = `https://t.me/GainGrid_bot?start=${userId}`; // Уникальная ссылка приглашения на бота
       const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=Join%20my%20game!`;
       window.open(telegramUrl, '_blank');
     }
