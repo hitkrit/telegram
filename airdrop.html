@@ -105,12 +105,39 @@
   </div>
 
   <script>
-    function connectWallet() {
-      alert("Wallet connection functionality will be added.");
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id') || 'defaultUser';
+
+    let userProgress = JSON.parse(localStorage.getItem('userProgress')) || {};
+    if (!userProgress[userId]) {
+      userProgress[userId] = { walletConnected: false, transactionMade: false };
+      localStorage.setItem('userProgress', JSON.stringify(userProgress));
     }
 
+    // Обработка подключения кошелька
+    function connectWallet() {
+      if (!userProgress[userId].walletConnected) {
+        userProgress[userId].walletConnected = true;
+        localStorage.setItem('userProgress', JSON.stringify(userProgress));
+        alert("Wallet connected successfully!");
+      } else {
+        alert("Wallet already connected.");
+      }
+    }
+
+    // Обработка выполнения транзакции
     function makeTransaction() {
-      alert("Transaction functionality will be added.");
+      if (userProgress[userId].walletConnected) {
+        if (!userProgress[userId].transactionMade) {
+          userProgress[userId].transactionMade = true;
+          localStorage.setItem('userProgress', JSON.stringify(userProgress));
+          alert("Transaction completed successfully!");
+        } else {
+          alert("Transaction already completed.");
+        }
+      } else {
+        alert("Please connect your wallet first.");
+      }
     }
 
     function goBack() {
