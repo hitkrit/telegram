@@ -56,7 +56,7 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
-      margin-left: calc(2cm - 1cm); /* Смещаем на 1 см левее */
+      margin-left: 1cm; /* Смещаем на 1 см вправо для Connect Wallet */
     }
 
     .blue-button {
@@ -83,6 +83,10 @@
       cursor: pointer;
       font-family: 'Poppins', sans-serif;
     }
+
+    .task-transaction-button {
+      margin-left: 0.5cm; /* Смещаем на 0.5 см вправо для Make a Transaction */
+    }
   </style>
 </head>
 <body>
@@ -94,7 +98,7 @@
 
     <div class="task-row" style="margin-top: 30px;">
       <div class="task-text">Make a Transaction</div>
-      <button class="task-button orange-button" onclick="makeTransaction()">Perform</button>
+      <button class="task-button orange-button task-transaction-button" onclick="makeTransaction()">Perform</button>
     </div>
 
     <button class="back-button" onclick="goBack()">Back</button>
