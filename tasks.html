@@ -74,7 +74,16 @@
   <button class="back-button" onclick="goBack()">Return to Main Screen</button>
 
   <script>
-    const completedTasks = localStorage.getItem('completedTasks') ? JSON.parse(localStorage.getItem('completedTasks')) : [];
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id') || 'defaultUser';
+
+    let userTasks = JSON.parse(localStorage.getItem('userTasks')) || {};
+    if (!userTasks[userId]) {
+      userTasks[userId] = [];
+      localStorage.setItem('userTasks', JSON.stringify(userTasks));
+    }
+
+    const completedTasks = userTasks[userId];
 
     // Отмечаем выполненные задания
     function renderTasks() {
@@ -87,9 +96,12 @@
     // Завершение задания
     function completeTask(taskId, url) {
       window.open(url, '_blank');
-      completedTasks.push(taskId);
-      localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
-      renderTasks();
+      if (!completedTasks.includes(taskId)) {
+        completedTasks.push(taskId);
+        userTasks[userId] = completedTasks;
+        localStorage.setItem('userTasks', JSON.stringify(userTasks));
+        renderTasks();
+      }
     }
 
     renderTasks();
