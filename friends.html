@@ -105,8 +105,24 @@
   </div>
 
   <script>
-    let userId = "123456";  // Уникальный ID пользователя (замените на настоящий)
-    const inviteLink = `https://t.me/CoinMAR_BOT?start=${userId}`;
+    // Получаем user_id из URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('user_id');  // уникальный ID пользователя из URL
+
+    // Проверяем, есть ли user_id, и если да, загружаем его данные
+    if (userId) {
+      // Пример запроса на сервер для получения данных о пользователе
+      fetch(`/api/getUserData?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+          updateEarnings(data.totalEarnings);  // Обновляем общий заработок
+          data.friends.forEach(friend => addFriendToList(friend.username, friend.earnings));  // Обновляем список друзей
+        });
+    } else {
+      alert('User ID not found in URL.');
+    }
+
+    const inviteLink = `https://t.me/CoinMAR_BOT?start=${userId}`;  // Уникальная ссылка для приглашения
 
     // Функция для приглашения друга через Telegram
     function inviteFriend() {
@@ -122,11 +138,12 @@
       });
     }
 
-    // Здесь можно добавить динамическое обновление общего заработка и списка друзей
+    // Обновляем отображение общего заработка
     function updateEarnings(totalEarnings) {
       document.getElementById('total-earnings').textContent = `Total Earned: ${totalEarnings} $MAR`;
     }
 
+    // Добавляем друга в список
     function addFriendToList(friendUsername, earnings) {
       const friendsList = document.getElementById('friends-list');
       const newFriend = document.createElement('li');
@@ -134,9 +151,6 @@
       friendsList.appendChild(newFriend);
     }
 
-    // Пример динамического добавления друга (можно связать с сервером)
-    addFriendToList('newFriend', 500);
-    updateEarnings(1000);  // Обновить заработанные монеты
   </script>
 
 </body>
